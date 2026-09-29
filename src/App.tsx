@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 
 import { ComparisonLandingPage } from "./pages/ComparisonLandingPage";
+import { TailwindDashboard } from "./tailwind/TailwindDashboard";
 
 function App() {
   return (
@@ -9,11 +10,7 @@ function App() {
 
       <Route
         path="/tailwind"
-        element={
-          <h1 className="p-6 text-2xl font-semibold text-brand">
-            Tailwind Dashboard
-          </h1>
-        }
+        element={<TailwindDashboard />}
       />
 
       <Route
