@@ -1,6 +1,6 @@
 import {
-  Area,
-  AreaChart,
+  Bar,
+  BarChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
@@ -8,15 +8,15 @@ import {
   YAxis,
 } from "recharts";
 
-import { completionTrendData } from "../../data/dashboardData";
+import { departmentProjectData } from "../../data/dashboardData";
 
-type TailwindCompletionChartProps = {
+type TailwindDepartmentBarChartProps = {
   theme: "light" | "dark";
 };
 
-export function TailwindCompletionChart({
+export function TailwindDepartmentBarChart({
   theme,
-}: TailwindCompletionChartProps) {
+}: TailwindDepartmentBarChartProps) {
   const isDark = theme === "dark";
 
   const gridColor = isDark ? "#2f2f2f" : "#e5e5e5";
@@ -25,10 +25,15 @@ export function TailwindCompletionChart({
   const textColor = isDark ? "#fafafa" : "#171717";
   const primaryColor = "#f97316";
 
+  const totalProjects = departmentProjectData.reduce(
+    (total, item) => total + item.count,
+    0,
+  );
+
   return (
     <section
       className={[
-        "h-full rounded-xl border border-border-light",
+        "rounded-xl border border-border-light",
         "bg-surface-light p-5 shadow-sm",
         "dark:border-border-dark dark:bg-surface-dark",
       ].join(" ")}
@@ -36,11 +41,11 @@ export function TailwindCompletionChart({
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
           <h2 className="text-base font-semibold tracking-tight text-text-light dark:text-text-dark">
-            Project Completion Trend
+            Projects by Department
           </h2>
 
           <p className="mt-1 text-sm text-muted-light dark:text-muted-dark">
-            Cumulative project deliveries over the last five months
+            Current project distribution across delivery teams
           </p>
         </div>
 
@@ -53,60 +58,47 @@ export function TailwindCompletionChart({
             "dark:text-muted-dark",
           ].join(" ")}
         >
-          5 months
+          {totalProjects} projects
         </span>
       </div>
 
       <div
         className="h-72 w-full"
         role="img"
-        aria-label="Area chart showing cumulative project completions from May to September"
+        aria-label="Bar chart showing the number of projects by department"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={completionTrendData}
+          <BarChart
+            data={departmentProjectData}
+            layout="vertical"
             margin={{
-              top: 8,
-              right: 8,
-              left: -20,
+              top: 4,
+              right: 16,
+              left: 12,
               bottom: 0,
             }}
           >
-            <defs>
-              <linearGradient
-                id="tailwindCompletionGradient"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
-                <stop offset="0%" stopColor={primaryColor} stopOpacity={0.32} />
-
-                <stop offset="55%" stopColor={primaryColor} stopOpacity={0.1} />
-
-                <stop offset="100%" stopColor={primaryColor} stopOpacity={0} />
-              </linearGradient>
-            </defs>
-
             <CartesianGrid
               stroke={gridColor}
               strokeDasharray="4 4"
-              vertical={false}
+              horizontal={false}
             />
 
             <XAxis
-              dataKey="month"
+              type="number"
+              allowDecimals={false}
               axisLine={false}
               tickLine={false}
               tick={{
                 fill: mutedColor,
                 fontSize: 12,
               }}
-              tickMargin={12}
             />
 
             <YAxis
-              allowDecimals={false}
+              type="category"
+              dataKey="department"
+              width={88}
               axisLine={false}
               tickLine={false}
               tick={{
@@ -117,8 +109,7 @@ export function TailwindCompletionChart({
 
             <Tooltip
               cursor={{
-                stroke: primaryColor,
-                strokeOpacity: 0.25,
+                fill: isDark ? "rgba(255,255,255,0.035)" : "rgba(0,0,0,0.025)",
               }}
               contentStyle={{
                 backgroundColor: surfaceColor,
@@ -135,27 +126,14 @@ export function TailwindCompletionChart({
               }}
             />
 
-            <Area
-              type="monotone"
-              dataKey="completed"
-              name="Completed Projects"
-              stroke={primaryColor}
-              strokeWidth={2.5}
-              fill="url(#tailwindCompletionGradient)"
-              dot={{
-                r: 3.5,
-                fill: primaryColor,
-                stroke: surfaceColor,
-                strokeWidth: 2,
-              }}
-              activeDot={{
-                r: 5.5,
-                fill: primaryColor,
-                stroke: surfaceColor,
-                strokeWidth: 2,
-              }}
+            <Bar
+              dataKey="count"
+              name="Projects"
+              fill={primaryColor}
+              radius={[0, 6, 6, 0]}
+              maxBarSize={28}
             />
-          </AreaChart>
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </section>

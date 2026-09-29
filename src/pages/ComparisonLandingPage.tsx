@@ -1,66 +1,127 @@
-import { ArrowRight, Blocks, Wind } from "lucide-react";
+import {
+  ArrowRight,
+  Blocks,
+  Code2,
+  Layers3,
+  Lightbulb,
+  Scale,
+  Wind,
+} from "lucide-react";
+
 import { Link } from "react-router";
 
 import styles from "./ComparisonLandingPage.module.css";
 
+const assignmentSections = [
+  {
+    id: "overview",
+    title: "Assignment Overview",
+    icon: Layers3,
+    text: "Placeholder for the final assignment overview, objective, and comparison requirements.",
+  },
+  {
+    id: "understanding",
+    title: "My Understanding",
+    icon: Lightbulb,
+    text: "Placeholder for my understanding of the assignment and what I aimed to learn from both implementations.",
+  },
+  {
+    id: "assumptions",
+    title: "Assumptions",
+    icon: Scale,
+    text: "Placeholder for the assumptions, scope decisions, and limitations followed while building the dashboards.",
+  },
+  {
+    id: "implementation",
+    title: "Implementation Approach",
+    icon: Code2,
+    text: "Placeholder for the architecture, responsive design, shared data, theming, charts, and implementation decisions.",
+  },
+];
+
 export function ComparisonLandingPage() {
   return (
     <main className={styles.page}>
-      <section className={styles.container}>
-        <header className={styles.header}>
-          <span className={styles.eyebrow}>Week 10 Assignment</span>
-
-          <h1 className={styles.title}>
-            Tailwind CSS vs Material UI
+      <div className={styles.container}>
+        <section
+          className={styles.dashboardSection}
+          aria-labelledby="comparison-heading"
+        >
+          <p className={styles.assignmentLabel}>Week 10 Assignment</p>
+          <h1 id="comparison-heading" className={styles.title}>
+            Tailwind CSS
+            <span> vs </span>
+            Material UI
           </h1>
 
-          <p className={styles.description}>
-            The same responsive dashboard implemented with two different UI
-            approaches to compare speed, customization, maintainability,
-            consistency, and scalability.
-          </p>
-        </header>
+          <div className={styles.frameworkGrid}>
+            <article className={styles.frameworkCard}>
+              <div className={styles.iconWrapper}>
+                <Wind size={24} aria-hidden="true" />
+              </div>
 
-        <div className={styles.grid}>
-          <article className={styles.card}>
-            <div className={styles.iconWrapper}>
-              <Wind size={24} aria-hidden="true" />
-            </div>
-
-            <div className={styles.cardContent}>
               <h2 className={styles.cardTitle}>Tailwind CSS</h2>
 
               <p className={styles.cardDescription}>
-                Utility-first dashboard implementation using Tailwind CSS.
+                Utility-first implementation of the project dashboard using
+                Tailwind CSS.
               </p>
-            </div>
 
-            <Link className={styles.cardLink} to="/tailwind">
-              View Tailwind Dashboard
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </article>
+              <Link className={styles.cardLink} to="/tailwind">
+                View Tailwind Dashboard
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </article>
 
-          <article className={styles.card}>
-            <div className={styles.iconWrapper}>
-              <Blocks size={24} aria-hidden="true" />
-            </div>
+            <article className={styles.frameworkCard}>
+              <div className={styles.iconWrapper}>
+                <Blocks size={24} aria-hidden="true" />
+              </div>
 
-            <div className={styles.cardContent}>
               <h2 className={styles.cardTitle}>Material UI</h2>
 
               <p className={styles.cardDescription}>
-                Component-library dashboard implementation using Material UI.
+                Component-based implementation of the same dashboard using
+                Material UI.
               </p>
-            </div>
 
-            <Link className={styles.cardLink} to="/mui">
-              View MUI Dashboard
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </article>
-        </div>
-      </section>
+              <Link className={styles.cardLink} to="/mui">
+                View MUI Dashboard
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </article>
+          </div>
+        </section>
+
+        <section
+          className={styles.assignmentSection}
+          aria-labelledby="assignment-heading"
+        >
+          <h2 id="assignment-heading" className={styles.assignmentTitle}>
+            Assignment Information
+          </h2>
+
+          <div className={styles.infoGrid}>
+            {assignmentSections.map((section) => {
+              const Icon = section.icon;
+
+              return (
+                <article key={section.id} className={styles.infoCard}>
+                  <div className={styles.infoIcon}>
+                    <Icon size={18} aria-hidden="true" />
+                  </div>
+
+                  <div>
+                    <h3 className={styles.infoTitle}>{section.title}</h3>
+
+                    <p className={styles.infoDescription}>{section.text}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

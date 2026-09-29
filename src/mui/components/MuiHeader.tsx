@@ -1,6 +1,10 @@
 import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 
-import { CalendarDays, Menu, Moon, Plus, Sun } from "lucide-react";
+import { alpha } from "@mui/material/styles";
+
+import { ArrowRightLeft, Menu, Moon, Sun } from "lucide-react";
+
+import { Link } from "react-router";
 
 import type { MuiThemeMode } from "../theme/muiTheme";
 
@@ -24,10 +28,15 @@ export function MuiHeader({
         position: "sticky",
         top: 0,
         zIndex: theme.zIndex.appBar,
+
         minHeight: 80,
+
         borderBottom: 1,
         borderColor: "divider",
-        backgroundColor: "background.paper",
+
+        backgroundColor: alpha(theme.palette.background.paper, 0.95),
+
+        backdropFilter: "blur(12px)",
       })}
     >
       <Stack
@@ -35,13 +44,21 @@ export function MuiHeader({
           xs: "column",
           sm: "row",
         }}
-        spacing={2}
         sx={{
           minHeight: 80,
 
           alignItems: {
             xs: "stretch",
             sm: "center",
+          },
+
+          justifyContent: {
+            sm: "space-between",
+          },
+
+          gap: {
+            xs: 2,
+            sm: 3,
           },
 
           px: {
@@ -55,10 +72,11 @@ export function MuiHeader({
       >
         <Stack
           direction="row"
-          spacing={1.5}
           sx={{
             minWidth: 0,
+            flex: 1,
             alignItems: "center",
+            gap: 1.5,
           }}
         >
           <IconButton
@@ -73,12 +91,15 @@ export function MuiHeader({
               width: 40,
               height: 40,
               flexShrink: 0,
+
               border: 1,
               borderColor: "divider",
+
               color: "text.secondary",
 
               "&:hover": {
                 color: "text.primary",
+                borderColor: "primary.main",
                 backgroundColor: "action.hover",
               },
             }}
@@ -86,17 +107,14 @@ export function MuiHeader({
             <Menu size={20} aria-hidden="true" />
           </IconButton>
 
-          <Box
-            sx={{
-              minWidth: 0,
-            }}
-          >
+          <Box sx={{ minWidth: 0 }}>
             <Typography
               component="h1"
               sx={{
                 fontSize: 20,
                 lineHeight: 1.3,
                 fontWeight: 600,
+                letterSpacing: "-0.015em",
               }}
             >
               Dashboard
@@ -117,31 +135,18 @@ export function MuiHeader({
         <Stack
           direction="row"
           sx={{
-            ml: {
-              sm: "auto",
+            flexShrink: 0,
+            flexWrap: "wrap",
+            alignItems: "center",
+
+            justifyContent: {
+              xs: "flex-start",
+              sm: "flex-end",
             },
 
             gap: 1,
-            flexWrap: "wrap",
-            alignItems: "center",
           }}
         >
-          <Button
-            variant="outlined"
-            startIcon={<CalendarDays size={17} aria-hidden="true" />}
-            sx={{
-              color: "text.primary",
-              borderColor: "divider",
-
-              "&:hover": {
-                borderColor: "divider",
-                backgroundColor: "action.hover",
-              },
-            }}
-          >
-            Last 30 Days
-          </Button>
-
           <IconButton
             onClick={onToggleTheme}
             aria-label={
@@ -151,9 +156,17 @@ export function MuiHeader({
             sx={{
               width: 40,
               height: 40,
+              flexShrink: 0,
+
               border: 1,
               borderColor: "divider",
+
               color: "text.primary",
+
+              "&:hover": {
+                borderColor: "primary.main",
+                backgroundColor: "action.hover",
+              },
             }}
           >
             {isDark ? (
@@ -164,10 +177,28 @@ export function MuiHeader({
           </IconButton>
 
           <Button
+            component={Link}
+            to="/tailwind"
             variant="contained"
-            startIcon={<Plus size={17} aria-hidden="true" />}
+            startIcon={<ArrowRightLeft size={17} aria-hidden="true" />}
+            aria-label="View Tailwind CSS dashboard version"
+            sx={(theme) => ({
+              whiteSpace: "nowrap",
+
+              boxShadow: `0 4px 12px ${alpha(
+                theme.palette.primary.main,
+                0.16,
+              )}`,
+
+              "&:hover": {
+                boxShadow: `0 5px 16px ${alpha(
+                  theme.palette.primary.main,
+                  0.22,
+                )}`,
+              },
+            })}
           >
-            New Project
+            View Tailwind Version
           </Button>
         </Stack>
       </Stack>

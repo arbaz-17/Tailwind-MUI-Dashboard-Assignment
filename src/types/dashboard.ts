@@ -4,6 +4,18 @@ export type ProjectStatus =
   | "On Hold"
   | "Planned";
 
+export type ProjectPriority =
+  | "High"
+  | "Medium"
+  | "Low";
+
+export type ProjectDepartment =
+  | "Engineering"
+  | "Design"
+  | "Product"
+  | "Marketing"
+  | "Operations";
+
 export type NavigationIcon =
   | "overview"
   | "projects"
@@ -22,7 +34,7 @@ export interface KpiMetric {
   id: string;
   title: string;
   value: number;
-  change: string;
+  supportingText: string;
   icon: "projects" | "active" | "completed" | "team";
 }
 
@@ -38,10 +50,14 @@ export interface ProjectStatusSummary {
 }
 
 export interface Project {
-  id: number;
+  id: string;
   name: string;
   owner: string;
   status: ProjectStatus;
+  priority: ProjectPriority;
+  department: ProjectDepartment;
   progress: number;
+  startDate: string;
   dueDate: string;
+  updatedAt: string;
 }

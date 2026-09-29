@@ -17,6 +17,8 @@ import {
   ChartColumn,
   Folder,
   LayoutDashboard,
+  PanelLeftClose,
+  PanelLeftOpen,
   Settings,
   Users,
   X,
@@ -28,10 +30,13 @@ import { mainNavigation, secondaryNavigation } from "../../data/navigationData";
 import type { NavigationIcon, NavigationItem } from "../../types/dashboard";
 
 export const DRAWER_WIDTH = 248;
+export const COLLAPSED_DRAWER_WIDTH = 80;
 
 type MuiSidebarProps = {
   mobileOpen: boolean;
+  collapsed: boolean;
   onClose: () => void;
+  onToggleCollapse: () => void;
 };
 
 const iconMap: Record<NavigationIcon, LucideIcon> = {
@@ -42,13 +47,17 @@ const iconMap: Record<NavigationIcon, LucideIcon> = {
   settings: Settings,
 };
 
+type SidebarNavigationProps = {
+  items: NavigationItem[];
+  collapsed?: boolean;
+  onItemClick?: () => void;
+};
+
 function SidebarNavigation({
   items,
+  collapsed = false,
   onItemClick,
-}: {
-  items: NavigationItem[];
-  onItemClick?: () => void;
-}) {
+}: SidebarNavigationProps) {
   return (
     <List disablePadding>
       {items.map((item) => {
@@ -59,14 +68,20 @@ function SidebarNavigation({
             key={item.id}
             component="button"
             selected={item.active}
+            title={collapsed ? item.label : undefined}
             aria-current={item.active ? "page" : undefined}
             onClick={onItemClick}
             sx={(theme) => ({
+              position: "relative",
               width: "100%",
               minHeight: 44,
-              px: 1.5,
+              px: collapsed ? 1 : 1.5,
               py: 1,
-              gap: 1.5,
+
+              justifyContent: collapsed ? "center" : "flex-start",
+
+              gap: collapsed ? 0 : 1.5,
+
               color: "text.secondary",
 
               "&:hover": {
@@ -76,7 +91,19 @@ function SidebarNavigation({
 
               "&.Mui-selected": {
                 color: "primary.main",
+
                 backgroundColor: alpha(theme.palette.primary.main, 0.1),
+
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  left: 0,
+                  top: 10,
+                  bottom: 10,
+                  width: 3,
+                  borderRadius: "0 4px 4px 0",
+                  backgroundColor: "primary.main",
+                },
 
                 "&:hover": {
                   backgroundColor: alpha(theme.palette.primary.main, 0.14),
@@ -87,23 +114,27 @@ function SidebarNavigation({
             <ListItemIcon
               sx={{
                 minWidth: 0,
+                width: 20,
+                justifyContent: "center",
                 color: "inherit",
               }}
             >
               <Icon size={18} aria-hidden="true" />
             </ListItemIcon>
 
-            <ListItemText
-              primary={item.label}
-              slotProps={{
-                primary: {
-                  sx: {
-                    fontSize: 14,
-                    fontWeight: 500,
+            {!collapsed && (
+              <ListItemText
+                primary={item.label}
+                slotProps={{
+                  primary: {
+                    sx: {
+                      fontSize: 14,
+                      fontWeight: 500,
+                    },
                   },
-                },
-              }}
-            />
+                }}
+              />
+            )}
           </ListItemButton>
         );
       })}
@@ -113,74 +144,125 @@ function SidebarNavigation({
 
 function SidebarContent({
   mobile = false,
+  collapsed = false,
   onClose,
+  onToggleCollapse,
 }: {
   mobile?: boolean;
+  collapsed?: boolean;
   onClose?: () => void;
+  onToggleCollapse?: () => void;
 }) {
+  const isCollapsed = collapsed && !mobile;
+
   return (
     <Stack
       sx={{
         height: "100%",
+        overflowX: "hidden",
       }}
     >
       <Stack
         direction="row"
         sx={{
           minHeight: 80,
-          px: 2.5,
+
+          px: isCollapsed ? 1 : 2,
+
           borderBottom: 1,
           borderColor: "divider",
+
           alignItems: "center",
-          justifyContent: "space-between",
+
+          justifyContent: isCollapsed ? "center" : "space-between",
+
+          gap: isCollapsed ? 0.5 : 1,
         }}
       >
         <Stack
           direction="row"
-          spacing={1.5}
           sx={{
+            minWidth: 0,
             alignItems: "center",
+            gap: 1.5,
           }}
         >
           <Box
-            sx={{
+            sx={(theme) => ({
               display: "grid",
               placeItems: "center",
               width: 36,
               height: 36,
+              flexShrink: 0,
               borderRadius: 1,
               backgroundColor: "primary.main",
               color: "primary.contrastText",
-            }}
+
+              boxShadow: `0 4px 12px ${alpha(
+                theme.palette.primary.main,
+                0.18,
+              )}`,
+            })}
           >
             <LayoutDashboard size={19} aria-hidden="true" />
           </Box>
 
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 600,
-            }}
-          >
-            ProjectFlow
-          </Typography>
+          {!isCollapsed && (
+            <Box sx={{ minWidth: 0 }}>
+              <Typography
+                sx={{
+                  fontSize: 16,
+                  lineHeight: 1.35,
+                  fontWeight: 600,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Optimus Fox
+              </Typography>
+            </Box>
+          )}
         </Stack>
 
-        {mobile && (
+        {mobile ? (
           <IconButton
             onClick={onClose}
             aria-label="Close navigation"
             sx={{
               width: 36,
               height: 36,
+              flexShrink: 0,
               color: "text.secondary",
 
               "&:hover": {
                 color: "text.primary",
+                backgroundColor: "action.hover",
               },
             }}
           >
             <X size={20} aria-hidden="true" />
+          </IconButton>
+        ) : (
+          <IconButton
+            onClick={onToggleCollapse}
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            sx={{
+              width: 36,
+              height: 36,
+              flexShrink: 0,
+              color: "text.secondary",
+
+              "&:hover": {
+                color: "text.primary",
+                backgroundColor: "action.hover",
+              },
+            }}
+          >
+            {isCollapsed ? (
+              <PanelLeftOpen size={18} aria-hidden="true" />
+            ) : (
+              <PanelLeftClose size={18} aria-hidden="true" />
+            )}
           </IconButton>
         )}
       </Stack>
@@ -189,12 +271,16 @@ function SidebarContent({
         sx={{
           flex: 1,
           overflowY: "auto",
-          p: 2,
+
+          px: isCollapsed ? 1 : 2,
+
+          py: 2,
         }}
       >
         <Box component="nav" aria-label="Main navigation">
           <SidebarNavigation
             items={mainNavigation}
+            collapsed={isCollapsed}
             onItemClick={mobile ? onClose : undefined}
           />
         </Box>
@@ -213,6 +299,7 @@ function SidebarContent({
           <Box component="nav" aria-label="Secondary navigation">
             <SidebarNavigation
               items={secondaryNavigation}
+              collapsed={isCollapsed}
               onItemClick={mobile ? onClose : undefined}
             />
           </Box>
@@ -222,28 +309,48 @@ function SidebarContent({
   );
 }
 
-export function MuiSidebar({ mobileOpen, onClose }: MuiSidebarProps) {
+export function MuiSidebar({
+  mobileOpen,
+  collapsed,
+  onClose,
+  onToggleCollapse,
+}: MuiSidebarProps) {
+  const desktopWidth = collapsed ? COLLAPSED_DRAWER_WIDTH : DRAWER_WIDTH;
+
   return (
     <>
       <Drawer
         variant="permanent"
         open
-        sx={{
+        sx={(theme) => ({
           display: {
             xs: "none",
             lg: "block",
           },
 
+          width: desktopWidth,
+          flexShrink: 0,
+
           "& .MuiDrawer-paper": {
-            width: DRAWER_WIDTH,
+            width: desktopWidth,
             boxSizing: "border-box",
+            overflowX: "hidden",
+
             borderRight: 1,
             borderColor: "divider",
+
             backgroundColor: "background.paper",
+
+            transition: theme.transitions.create("width", {
+              duration: theme.transitions.duration.shorter,
+            }),
           },
-        }}
+        })}
       >
-        <SidebarContent />
+        <SidebarContent
+          collapsed={collapsed}
+          onToggleCollapse={onToggleCollapse}
+        />
       </Drawer>
 
       <Drawer

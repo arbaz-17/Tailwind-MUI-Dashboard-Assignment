@@ -20,7 +20,10 @@ export function createMuiDashboardTheme(mode: MuiThemeMode) {
       mode,
 
       primary: {
-        main: "#2563eb",
+        main: "#f97316",
+        dark: "#ea580c",
+        light: "#fb923c",
+        contrastText: "#ffffff",
       },
 
       success: {
@@ -28,25 +31,29 @@ export function createMuiDashboardTheme(mode: MuiThemeMode) {
       },
 
       warning: {
-        main: "#d97706",
+        main: "#ca8a04",
+      },
+
+      error: {
+        main: "#dc2626",
       },
 
       background: {
-        default: isLight ? "#f8fafc" : "#0f172a",
-        paper: isLight ? "#ffffff" : "#1e293b",
+        default: isLight ? "#f7f7f7" : "#0a0a0a",
+        paper: isLight ? "#ffffff" : "#171717",
       },
 
       text: {
-        primary: isLight ? "#0f172a" : "#f8fafc",
-        secondary: isLight ? "#64748b" : "#94a3b8",
+        primary: isLight ? "#171717" : "#fafafa",
+        secondary: isLight ? "#737373" : "#a3a3a3",
       },
 
-      divider: isLight ? "#e2e8f0" : "#334155",
+      divider: isLight ? "#e5e5e5" : "#2f2f2f",
     },
 
     typography: {
       fontFamily: [
-        "Inter",
+        "Poppins",
         "ui-sans-serif",
         "system-ui",
         "-apple-system",
@@ -54,6 +61,10 @@ export function createMuiDashboardTheme(mode: MuiThemeMode) {
         '"Segoe UI"',
         "sans-serif",
       ].join(","),
+
+      button: {
+        fontFamily: "Poppins",
+      },
     },
 
     shape: {
@@ -109,7 +120,7 @@ export function createMuiDashboardTheme(mode: MuiThemeMode) {
           root: {
             borderRadius: 12,
             boxShadow: "none",
-            borderColor: isLight ? "#e2e8f0" : "#334155",
+            borderColor: isLight ? "#e5e5e5" : "#2f2f2f",
           },
         },
       },

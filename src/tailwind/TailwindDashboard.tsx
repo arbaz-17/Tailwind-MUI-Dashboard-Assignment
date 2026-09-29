@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { kpiMetrics } from "../data/dashboardData";
 
 import { TailwindCompletionChart } from "./components/TailwindCompletionChart";
+import { TailwindDepartmentBarChart } from "./components/TailwindDepartmentBarChart";
 import { TailwindHeader } from "./components/TailwindHeader";
 import { TailwindKpiCard } from "./components/TailwindKpiCard";
 import { TailwindProjectsTable } from "./components/TailwindProjectsTable";
@@ -12,14 +13,18 @@ import { TailwindStatusSummary } from "./components/TailwindStatusSummary";
 type ThemeMode = "light" | "dark";
 
 export function TailwindDashboard() {
-  const [theme, setTheme] = useState<ThemeMode>("light");
-  const [mobileNavigationOpen, setMobileNavigationOpen] =
-    useState(false);
+  const [theme, setTheme] = useState<ThemeMode>("dark");
+
+  const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
+
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   function toggleTheme() {
-    setTheme((currentTheme) =>
-      currentTheme === "light" ? "dark" : "light",
-    );
+    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+  }
+
+  function toggleSidebar() {
+    setSidebarCollapsed((currentValue) => !currentValue);
   }
 
   useEffect(() => {
@@ -41,20 +46,30 @@ export function TailwindDashboard() {
   }, [mobileNavigationOpen]);
 
   return (
-    <div className={theme === "dark" ? "dark" : ""}>
-      <div className="min-h-screen bg-app-light font-sans text-text-light dark:bg-app-dark dark:text-text-dark">
+    <div
+      className={["tailwind-dashboard", theme === "dark" ? "dark" : ""].join(
+        " ",
+      )}
+    >
+      <div className="min-h-screen overflow-x-hidden bg-app-light font-sans text-text-light dark:bg-app-dark dark:text-text-dark">
         <TailwindSidebar
           mobileOpen={mobileNavigationOpen}
+          collapsed={sidebarCollapsed}
           onClose={() => setMobileNavigationOpen(false)}
+          onToggleCollapse={toggleSidebar}
         />
 
-        <div className="min-h-screen lg:pl-62">
+        <div
+          className={[
+            "min-h-screen",
+            "transition-[padding] duration-300 ease-in-out",
+            sidebarCollapsed ? "lg:pl-20" : "lg:pl-62",
+          ].join(" ")}
+        >
           <TailwindHeader
             theme={theme}
             onToggleTheme={toggleTheme}
-            onOpenNavigation={() =>
-              setMobileNavigationOpen(true)
-            }
+            onOpenNavigation={() => setMobileNavigationOpen(true)}
           />
 
           <main className="space-y-6 p-4 sm:p-6 lg:p-8">
@@ -63,10 +78,7 @@ export function TailwindDashboard() {
               className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
             >
               {kpiMetrics.map((metric) => (
-                <TailwindKpiCard
-                  key={metric.id}
-                  metric={metric}
-                />
+                <TailwindKpiCard key={metric.id} metric={metric} />
               ))}
             </section>
 
@@ -77,6 +89,8 @@ export function TailwindDashboard() {
 
               <TailwindStatusSummary />
             </div>
+
+            <TailwindDepartmentBarChart theme={theme} />
 
             <TailwindProjectsTable />
           </main>

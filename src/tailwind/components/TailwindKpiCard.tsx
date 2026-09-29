@@ -1,7 +1,7 @@
 import {
+  Activity,
   CircleCheckBig,
   FolderKanban,
-  Activity,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -19,21 +19,22 @@ const iconMap: Record<KpiMetric["icon"], LucideIcon> = {
   team: Users,
 };
 
-export function TailwindKpiCard({
-  metric,
-}: TailwindKpiCardProps) {
+export function TailwindKpiCard({ metric }: TailwindKpiCardProps) {
   const Icon = iconMap[metric.icon];
 
   return (
     <article
       className={[
-        "rounded-xl border border-border-light",
-        "bg-surface-light p-5",
+        "group flex min-h-[152px] h-full flex-col rounded-xl border",
+        "border-border-light bg-surface-light p-5",
+        "shadow-sm transition-all duration-200",
+        "hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-md",
         "dark:border-border-dark dark:bg-surface-dark",
+        "dark:hover:border-brand/30",
       ].join(" ")}
     >
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-medium text-muted-light dark:text-muted-dark">
             {metric.title}
           </p>
@@ -43,13 +44,19 @@ export function TailwindKpiCard({
           </p>
         </div>
 
-        <div className="grid size-10 shrink-0 place-items-center rounded-lg bg-brand/10 text-brand">
-          <Icon size={19} aria-hidden="true" />
+        <div
+          className={[
+            "grid size-11 shrink-0 place-items-center rounded-xl",
+            "bg-brand/10 text-brand ring-1 ring-inset ring-brand/15",
+            "transition-transform duration-200 group-hover:scale-105",
+          ].join(" ")}
+        >
+          <Icon size={20} aria-hidden="true" />
         </div>
       </div>
 
-      <p className="mt-4 text-sm font-medium text-success">
-        {metric.change}
+      <p className="mt-auto pt-5 text-[13px] font-medium leading-5 text-muted-light dark:text-muted-dark">
+        {metric.supportingText}
       </p>
     </article>
   );
