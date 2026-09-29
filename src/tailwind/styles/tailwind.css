@@ -35,3 +35,60 @@
   --color-warning: #ca8a04;
   --color-hold: #dc2626;
 }
+
+/*
+ * Tailwind Preflight is intentionally disabled because the application
+ * also contains a Material UI implementation.
+ *
+ * This scoped reset gives the Tailwind dashboard the normalization it
+ * needs without changing MUI or the comparison landing page.
+ */
+@layer base {
+  .tailwind-dashboard,
+  .tailwind-dashboard *,
+  .tailwind-dashboard *::before,
+  .tailwind-dashboard *::after {
+    box-sizing: border-box;
+  }
+
+  .tailwind-dashboard h1,
+  .tailwind-dashboard h2,
+  .tailwind-dashboard h3,
+  .tailwind-dashboard h4,
+  .tailwind-dashboard h5,
+  .tailwind-dashboard h6,
+  .tailwind-dashboard p {
+    margin: 0;
+  }
+
+  .tailwind-dashboard button {
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+  }
+
+  .tailwind-dashboard button,
+  .tailwind-dashboard a {
+    font-family: inherit;
+  }
+
+  .tailwind-dashboard button:not(:disabled),
+  .tailwind-dashboard a {
+    cursor: pointer;
+  }
+
+  .tailwind-dashboard img,
+  .tailwind-dashboard svg {
+    display: block;
+  }
+
+  .tailwind-dashboard table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+}

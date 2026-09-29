@@ -29,10 +29,30 @@ export function MuiKpiCard({ metric }: MuiKpiCardProps) {
   return (
     <Card
       component="article"
-      sx={{
+      sx={(theme) => ({
+        display: "flex",
+        minHeight: 152,
+        height: "100%",
+        flexDirection: "column",
+
         p: 2.5,
+
         backgroundColor: "background.paper",
-      }}
+
+        transition:
+          "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
+
+        "&:hover": {
+          transform: "translateY(-2px)",
+
+          borderColor: alpha(theme.palette.primary.main, 0.3),
+
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? "0 10px 28px rgba(0,0,0,0.20)"
+              : "0 10px 28px rgba(0,0,0,0.07)",
+        },
+      })}
     >
       <Stack
         direction="row"
@@ -42,7 +62,7 @@ export function MuiKpiCard({ metric }: MuiKpiCardProps) {
           gap: 2,
         }}
       >
-        <Box>
+        <Box sx={{ minWidth: 0 }}>
           <Typography
             color="text.secondary"
             sx={{
@@ -70,23 +90,31 @@ export function MuiKpiCard({ metric }: MuiKpiCardProps) {
           sx={(theme) => ({
             display: "grid",
             placeItems: "center",
-            width: 40,
-            height: 40,
+
+            width: 44,
+            height: 44,
             flexShrink: 0,
-            borderRadius: 1,
+
+            borderRadius: 1.5,
+
             color: "primary.main",
+
+            border: `1px solid ${alpha(theme.palette.primary.main, 0.15)}`,
+
             backgroundColor: alpha(theme.palette.primary.main, 0.1),
           })}
         >
-          <Icon size={19} aria-hidden="true" />
+          <Icon size={20} aria-hidden="true" />
         </Box>
       </Stack>
 
       <Typography
         color="text.secondary"
         sx={{
-          mt: 2,
-          fontSize: 14,
+          mt: "auto",
+          pt: 2.5,
+          fontSize: 13,
+          lineHeight: 1.55,
           fontWeight: 500,
         }}
       >

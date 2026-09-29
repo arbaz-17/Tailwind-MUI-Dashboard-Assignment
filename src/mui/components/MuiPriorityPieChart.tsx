@@ -1,6 +1,6 @@
 import { Box, Card, Stack, Typography } from "@mui/material";
 
-import { useTheme } from "@mui/material/styles";
+import { alpha, useTheme } from "@mui/material/styles";
 
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
@@ -27,27 +27,60 @@ export function MuiPriorityPieChart() {
         backgroundColor: "background.paper",
       }}
     >
-      <Box sx={{ mb: 2 }}>
-        <Typography
-          component="h2"
-          sx={{
-            fontSize: 16,
-            fontWeight: 600,
-          }}
-        >
-          Project Priority Distribution
-        </Typography>
+      <Stack
+        direction="row"
+        sx={{
+          mb: 2,
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: 2,
+        }}
+      >
+        <Box>
+          <Typography
+            component="h2"
+            sx={{
+              fontSize: 16,
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Project Priority Distribution
+          </Typography>
 
-        <Typography
-          color="text.secondary"
+          <Typography
+            color="text.secondary"
+            sx={{
+              mt: 0.5,
+              fontSize: 14,
+            }}
+          >
+            Current portfolio grouped by delivery priority
+          </Typography>
+        </Box>
+
+        <Box
           sx={{
-            mt: 0.5,
-            fontSize: 14,
+            px: 1.25,
+            py: 0.5,
+            border: 1,
+            borderColor: "divider",
+            borderRadius: 999,
+            backgroundColor: "action.hover",
           }}
         >
-          Current portfolio grouped by delivery priority
-        </Typography>
-      </Box>
+          <Typography
+            color="text.secondary"
+            sx={{
+              fontSize: 12,
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {totalProjects} projects
+          </Typography>
+        </Box>
+      </Stack>
 
       <Box
         sx={{
@@ -76,13 +109,16 @@ export function MuiPriorityPieChart() {
               <Tooltip
                 contentStyle={{
                   backgroundColor: theme.palette.background.paper,
+
                   border: `1px solid ${theme.palette.divider}`,
-                  borderRadius: 8,
+
+                  borderRadius: 10,
+
                   color: theme.palette.text.primary,
-                }}
-                labelStyle={{
-                  color: theme.palette.text.primary,
-                  fontWeight: 600,
+
+                  fontSize: 12,
+
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.16)",
                 }}
               />
 
@@ -119,7 +155,7 @@ export function MuiPriorityPieChart() {
                 sx={{
                   fontSize: 28,
                   lineHeight: 1,
-                  fontWeight: 700,
+                  fontWeight: 600,
                 }}
               >
                 {totalProjects}
@@ -138,11 +174,7 @@ export function MuiPriorityPieChart() {
           </Box>
         </Box>
 
-        <Stack
-          sx={{
-            gap: 2,
-          }}
-        >
+        <Stack sx={{ gap: 1.25 }}>
           {priorityProjectData.map((item, index) => {
             const percentage =
               totalProjects === 0
@@ -154,9 +186,21 @@ export function MuiPriorityPieChart() {
                 key={item.priority}
                 direction="row"
                 sx={{
+                  p: 1.5,
+
+                  border: 1,
+                  borderColor: "divider",
+                  borderRadius: 1.5,
+
                   alignItems: "center",
                   justifyContent: "space-between",
+
                   gap: 2,
+
+                  backgroundColor: alpha(
+                    theme.palette.text.primary,
+                    theme.palette.mode === "dark" ? 0.02 : 0.015,
+                  ),
                 }}
               >
                 <Stack
@@ -186,10 +230,15 @@ export function MuiPriorityPieChart() {
                   </Typography>
                 </Stack>
 
-                <Box sx={{ textAlign: "right" }}>
+                <Box
+                  sx={{
+                    textAlign: "right",
+                  }}
+                >
                   <Typography
                     sx={{
                       fontSize: 14,
+                      lineHeight: 1.3,
                       fontWeight: 600,
                     }}
                   >
@@ -199,7 +248,8 @@ export function MuiPriorityPieChart() {
                   <Typography
                     color="text.secondary"
                     sx={{
-                      fontSize: 12,
+                      mt: 0.25,
+                      fontSize: 11,
                     }}
                   >
                     {percentage}%

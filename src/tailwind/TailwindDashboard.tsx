@@ -13,12 +13,18 @@ import { TailwindStatusSummary } from "./components/TailwindStatusSummary";
 type ThemeMode = "light" | "dark";
 
 export function TailwindDashboard() {
-  const [theme, setTheme] = useState<ThemeMode>("light");
+  const [theme, setTheme] = useState<ThemeMode>("dark");
 
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
 
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
   function toggleTheme() {
     setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+  }
+
+  function toggleSidebar() {
+    setSidebarCollapsed((currentValue) => !currentValue);
   }
 
   useEffect(() => {
@@ -40,14 +46,26 @@ export function TailwindDashboard() {
   }, [mobileNavigationOpen]);
 
   return (
-    <div className={theme === "dark" ? "dark" : ""}>
-      <div className="min-h-screen bg-app-light font-sans text-text-light dark:bg-app-dark dark:text-text-dark">
+    <div
+      className={["tailwind-dashboard", theme === "dark" ? "dark" : ""].join(
+        " ",
+      )}
+    >
+      <div className="min-h-screen overflow-x-hidden bg-app-light font-sans text-text-light dark:bg-app-dark dark:text-text-dark">
         <TailwindSidebar
           mobileOpen={mobileNavigationOpen}
+          collapsed={sidebarCollapsed}
           onClose={() => setMobileNavigationOpen(false)}
+          onToggleCollapse={toggleSidebar}
         />
 
-        <div className="min-h-screen lg:pl-62">
+        <div
+          className={[
+            "min-h-screen",
+            "transition-[padding] duration-300 ease-in-out",
+            sidebarCollapsed ? "lg:pl-20" : "lg:pl-62",
+          ].join(" ")}
+        >
           <TailwindHeader
             theme={theme}
             onToggleTheme={toggleTheme}

@@ -1,4 +1,4 @@
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Stack, Typography } from "@mui/material";
 
 import { useTheme } from "@mui/material/styles";
 
@@ -32,27 +32,60 @@ export function MuiCompletionChart() {
         backgroundColor: "background.paper",
       }}
     >
-      <Box sx={{ mb: 3 }}>
-        <Typography
-          component="h2"
-          sx={{
-            fontSize: 16,
-            fontWeight: 600,
-          }}
-        >
-          Project Completion Trend
-        </Typography>
+      <Stack
+        direction="row"
+        sx={{
+          mb: 3,
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: 2,
+        }}
+      >
+        <Box>
+          <Typography
+            component="h2"
+            sx={{
+              fontSize: 16,
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Project Completion Trend
+          </Typography>
 
-        <Typography
-          color="text.secondary"
+          <Typography
+            color="text.secondary"
+            sx={{
+              mt: 0.5,
+              fontSize: 14,
+            }}
+          >
+            Cumulative project deliveries over the last five months
+          </Typography>
+        </Box>
+
+        <Box
           sx={{
-            mt: 0.5,
-            fontSize: 14,
+            px: 1.25,
+            py: 0.5,
+            border: 1,
+            borderColor: "divider",
+            borderRadius: 999,
+            backgroundColor: "action.hover",
           }}
         >
-          Cumulative project deliveries over the last five months
-        </Typography>
-      </Box>
+          <Typography
+            color="text.secondary"
+            sx={{
+              fontSize: 12,
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+            }}
+          >
+            5 months
+          </Typography>
+        </Box>
+      </Stack>
 
       <Box
         role="img"
@@ -80,13 +113,11 @@ export function MuiCompletionChart() {
                 x2="0"
                 y2="1"
               >
-                <stop offset="0%" stopColor={primaryColor} stopOpacity={0.35} />
+                <stop offset="0%" stopColor={primaryColor} stopOpacity={0.32} />
 
-                <stop
-                  offset="100%"
-                  stopColor={primaryColor}
-                  stopOpacity={0.02}
-                />
+                <stop offset="55%" stopColor={primaryColor} stopOpacity={0.1} />
+
+                <stop offset="100%" stopColor={primaryColor} stopOpacity={0} />
               </linearGradient>
             </defs>
 
@@ -120,17 +151,20 @@ export function MuiCompletionChart() {
             <Tooltip
               cursor={{
                 stroke: primaryColor,
-                strokeOpacity: 0.3,
+                strokeOpacity: 0.25,
               }}
               contentStyle={{
                 backgroundColor: surfaceColor,
                 border: `1px solid ${gridColor}`,
-                borderRadius: 8,
+                borderRadius: 10,
                 color: textColor,
+                fontSize: 12,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.16)",
               }}
               labelStyle={{
                 color: textColor,
                 fontWeight: 600,
+                marginBottom: 4,
               }}
             />
 
@@ -139,17 +173,19 @@ export function MuiCompletionChart() {
               dataKey="completed"
               name="Completed Projects"
               stroke={primaryColor}
-              strokeWidth={3}
+              strokeWidth={2.5}
               fill="url(#muiCompletionGradient)"
               dot={{
-                r: 4,
+                r: 3.5,
                 fill: primaryColor,
                 stroke: surfaceColor,
                 strokeWidth: 2,
               }}
               activeDot={{
-                r: 6,
+                r: 5.5,
                 fill: primaryColor,
+                stroke: surfaceColor,
+                strokeWidth: 2,
               }}
             />
           </AreaChart>

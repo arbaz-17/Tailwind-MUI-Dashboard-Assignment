@@ -1,6 +1,6 @@
-import { Card, LinearProgress, Stack, Typography } from "@mui/material";
+import { Box, Card, LinearProgress, Stack, Typography } from "@mui/material";
 
-import type { Theme } from "@mui/material/styles";
+import { alpha, type Theme } from "@mui/material/styles";
 
 import { projectStatusData } from "../../data/dashboardData";
 
@@ -15,7 +15,7 @@ function getStatusColor(status: ProjectStatus, theme: Theme) {
       return theme.palette.success.main;
 
     case "On Hold":
-      return "#ea580c";
+      return theme.palette.error.main;
 
     case "Planned":
       return theme.palette.warning.main;
@@ -23,6 +23,11 @@ function getStatusColor(status: ProjectStatus, theme: Theme) {
 }
 
 export function MuiStatusSummary() {
+  const totalProjects = projectStatusData.reduce(
+    (total, item) => total + item.count,
+    0,
+  );
+
   return (
     <Card
       component="section"
@@ -33,16 +38,20 @@ export function MuiStatusSummary() {
       }}
     >
       <Stack
+        direction="row"
         sx={{
-          height: "100%",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: 2,
         }}
       >
-        <div>
+        <Box>
           <Typography
             component="h2"
             sx={{
               fontSize: 16,
               fontWeight: 600,
+              letterSpacing: "-0.01em",
             }}
           >
             Project Status
@@ -57,84 +66,128 @@ export function MuiStatusSummary() {
           >
             Current project distribution
           </Typography>
-        </div>
+        </Box>
 
-        <Stack
+        <Box
           sx={{
-            mt: 3,
-            gap: 2.5,
+            px: 1.25,
+            py: 0.5,
+            border: 1,
+            borderColor: "divider",
+            borderRadius: 999,
+            backgroundColor: "action.hover",
           }}
         >
-          {projectStatusData.map((item) => (
-            <div key={item.status}>
+          <Typography
+            color="text.secondary"
+            sx={{
+              fontSize: 12,
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {totalProjects} total
+          </Typography>
+        </Box>
+      </Stack>
+
+      <Stack
+        sx={{
+          mt: 3,
+          gap: 2.5,
+        }}
+      >
+        {projectStatusData.map((item) => (
+          <Box key={item.status}>
+            <Stack
+              direction="row"
+              sx={{
+                mb: 1.25,
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 2,
+              }}
+            >
               <Stack
                 direction="row"
                 sx={{
-                  mb: 1,
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: 2,
+                  gap: 1.25,
                 }}
               >
-                <Stack
-                  direction="row"
-                  sx={{
-                    alignItems: "center",
-                    gap: 1,
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: 14,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {item.status}
-                  </Typography>
-
-                  <Typography
-                    color="text.secondary"
-                    sx={{
-                      fontSize: 12,
-                    }}
-                  >
-                    {item.count}
-                  </Typography>
-                </Stack>
+                <Box
+                  sx={(theme) => ({
+                    width: 8,
+                    height: 8,
+                    flexShrink: 0,
+                    borderRadius: "50%",
+                    backgroundColor: getStatusColor(item.status, theme),
+                  })}
+                />
 
                 <Typography
-                  color="text.secondary"
                   sx={{
                     fontSize: 14,
                     fontWeight: 500,
                   }}
                 >
-                  {item.percentage}%
+                  {item.status}
                 </Typography>
-              </Stack>
 
-              <LinearProgress
-                variant="determinate"
-                value={item.percentage}
-                aria-label={`${item.status} projects`}
-                sx={(theme) => {
-                  const color = getStatusColor(item.status, theme);
-
-                  return {
-                    height: 8,
+                <Box
+                  sx={{
+                    px: 1,
+                    py: 0.25,
                     borderRadius: 999,
                     backgroundColor: "action.hover",
+                  }}
+                >
+                  <Typography
+                    color="text.secondary"
+                    sx={{
+                      fontSize: 11,
+                      fontWeight: 500,
+                    }}
+                  >
+                    {item.count}
+                  </Typography>
+                </Box>
+              </Stack>
 
-                    "& .MuiLinearProgress-bar": {
-                      borderRadius: 999,
-                      backgroundColor: color,
-                    },
-                  };
+              <Typography
+                color="text.secondary"
+                sx={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                  fontVariantNumeric: "tabular-nums",
                 }}
-              />
-            </div>
-          ))}
-        </Stack>
+              >
+                {item.percentage}%
+              </Typography>
+            </Stack>
+
+            <LinearProgress
+              variant="determinate"
+              value={item.percentage}
+              aria-label={`${item.status} projects`}
+              sx={(theme) => {
+                const color = getStatusColor(item.status, theme);
+
+                return {
+                  height: 8,
+                  borderRadius: 999,
+
+                  backgroundColor: alpha(theme.palette.text.primary, 0.07),
+
+                  "& .MuiLinearProgress-bar": {
+                    borderRadius: 999,
+                    backgroundColor: color,
+                  },
+                };
+              }}
+            />
+          </Box>
+        ))}
       </Stack>
     </Card>
   );

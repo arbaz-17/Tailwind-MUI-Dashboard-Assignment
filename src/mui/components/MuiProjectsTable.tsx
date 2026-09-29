@@ -28,7 +28,7 @@ function getStatusColor(status: ProjectStatus, theme: Theme) {
       return theme.palette.success.main;
 
     case "On Hold":
-      return "#ea580c";
+      return theme.palette.error.main;
 
     case "Planned":
       return theme.palette.warning.main;
@@ -54,34 +54,66 @@ export function MuiProjectsTable() {
         backgroundColor: "background.paper",
       }}
     >
-      <Box
+      <Stack
+        direction="row"
         sx={{
           px: 2.5,
           py: 2,
+
           borderBottom: 1,
           borderColor: "divider",
+
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+
+          gap: 2,
         }}
       >
-        <Typography
-          component="h2"
-          sx={{
-            fontSize: 16,
-            fontWeight: 600,
-          }}
-        >
-          Recent Projects
-        </Typography>
+        <Box>
+          <Typography
+            component="h2"
+            sx={{
+              fontSize: 16,
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Recent Projects
+          </Typography>
 
-        <Typography
-          color="text.secondary"
+          <Typography
+            color="text.secondary"
+            sx={{
+              mt: 0.5,
+              fontSize: 14,
+            }}
+          >
+            Latest project activity and progress
+          </Typography>
+        </Box>
+
+        <Box
           sx={{
-            mt: 0.5,
-            fontSize: 14,
+            px: 1.25,
+            py: 0.5,
+            border: 1,
+            borderColor: "divider",
+            borderRadius: 999,
+            backgroundColor: "action.hover",
           }}
         >
-          Latest project activity and progress
-        </Typography>
-      </Box>
+          <Typography
+            color="text.secondary"
+            sx={{
+              fontSize: 12,
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {recentProjects.length} recent
+          </Typography>
+        </Box>
+      </Stack>
 
       <TableContainer
         sx={{
@@ -90,7 +122,7 @@ export function MuiProjectsTable() {
       >
         <Table
           sx={{
-            minWidth: 720,
+            minWidth: 760,
           }}
           aria-label="Recent projects"
         >
@@ -110,7 +142,14 @@ export function MuiProjectsTable() {
             Recent projects with owners, statuses, progress, and due dates
           </caption>
 
-          <TableHead>
+          <TableHead
+            sx={(theme) => ({
+              backgroundColor: alpha(
+                theme.palette.text.primary,
+                theme.palette.mode === "dark" ? 0.025 : 0.02,
+              ),
+            })}
+          >
             <TableRow>
               {["Project", "Owner", "Status", "Progress", "Due Date"].map(
                 (heading) => (
@@ -119,11 +158,15 @@ export function MuiProjectsTable() {
                     sx={{
                       px: 2.5,
                       py: 1.5,
+
                       borderColor: "divider",
+
                       color: "text.secondary",
-                      fontSize: 12,
+
+                      fontSize: 11,
                       fontWeight: 600,
-                      letterSpacing: "0.05em",
+
+                      letterSpacing: "0.08em",
                       textTransform: "uppercase",
                       whiteSpace: "nowrap",
                     }}
@@ -140,6 +183,8 @@ export function MuiProjectsTable() {
               <TableRow
                 key={project.id}
                 sx={{
+                  transition: "background-color 150ms ease",
+
                   "&:last-child td": {
                     borderBottom: 0,
                   },
@@ -159,10 +204,22 @@ export function MuiProjectsTable() {
                   <Typography
                     sx={{
                       fontSize: 14,
+                      lineHeight: 1.4,
                       fontWeight: 500,
                     }}
                   >
                     {project.name}
+                  </Typography>
+
+                  <Typography
+                    color="text.secondary"
+                    sx={{
+                      mt: 0.5,
+                      fontSize: 11,
+                      fontWeight: 500,
+                    }}
+                  >
+                    {project.id}
                   </Typography>
                 </TableCell>
 
@@ -170,8 +227,11 @@ export function MuiProjectsTable() {
                   sx={{
                     px: 2.5,
                     py: 2,
+
                     borderColor: "divider",
+
                     color: "text.secondary",
+
                     fontSize: 14,
                   }}
                 >
@@ -193,11 +253,16 @@ export function MuiProjectsTable() {
 
                       return {
                         height: 24,
+
+                        border: `1px solid ${alpha(color, 0.2)}`,
+
                         borderRadius: 999,
+
                         color,
+
                         backgroundColor: alpha(
                           color,
-                          theme.palette.mode === "dark" ? 0.18 : 0.1,
+                          theme.palette.mode === "dark" ? 0.12 : 0.08,
                         ),
 
                         "& .MuiChip-label": {
@@ -234,9 +299,15 @@ export function MuiProjectsTable() {
 
                         return {
                           flex: 1,
+
                           height: 8,
+
                           borderRadius: 999,
-                          backgroundColor: "action.hover",
+
+                          backgroundColor: alpha(
+                            theme.palette.text.primary,
+                            0.07,
+                          ),
 
                           "& .MuiLinearProgress-bar": {
                             borderRadius: 999,
@@ -251,9 +322,13 @@ export function MuiProjectsTable() {
                       sx={{
                         width: 40,
                         flexShrink: 0,
+
                         textAlign: "right",
+
                         fontSize: 14,
                         fontWeight: 500,
+
+                        fontVariantNumeric: "tabular-nums",
                       }}
                     >
                       {project.progress}%
@@ -265,9 +340,13 @@ export function MuiProjectsTable() {
                   sx={{
                     px: 2.5,
                     py: 2,
+
                     borderColor: "divider",
+
                     color: "text.secondary",
+
                     fontSize: 14,
+
                     whiteSpace: "nowrap",
                   }}
                 >

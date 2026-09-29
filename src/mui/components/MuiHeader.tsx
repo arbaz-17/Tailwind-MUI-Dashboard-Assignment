@@ -1,18 +1,8 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 
-import {
-  ArrowRightLeft,
-  CalendarDays,
-  Menu,
-  Moon,
-  Sun,
-} from "lucide-react";
+import { alpha } from "@mui/material/styles";
+
+import { ArrowRightLeft, Menu, Moon, Sun } from "lucide-react";
 
 import { Link } from "react-router";
 
@@ -38,10 +28,15 @@ export function MuiHeader({
         position: "sticky",
         top: 0,
         zIndex: theme.zIndex.appBar,
+
         minHeight: 80,
+
         borderBottom: 1,
         borderColor: "divider",
-        backgroundColor: "background.paper",
+
+        backgroundColor: alpha(theme.palette.background.paper, 0.95),
+
+        backdropFilter: "blur(12px)",
       })}
     >
       <Stack
@@ -96,12 +91,15 @@ export function MuiHeader({
               width: 40,
               height: 40,
               flexShrink: 0,
+
               border: 1,
               borderColor: "divider",
+
               color: "text.secondary",
 
               "&:hover": {
                 color: "text.primary",
+                borderColor: "primary.main",
                 backgroundColor: "action.hover",
               },
             }}
@@ -109,17 +107,14 @@ export function MuiHeader({
             <Menu size={20} aria-hidden="true" />
           </IconButton>
 
-          <Box
-            sx={{
-              minWidth: 0,
-            }}
-          >
+          <Box sx={{ minWidth: 0 }}>
             <Typography
               component="h1"
               sx={{
                 fontSize: 20,
                 lineHeight: 1.3,
                 fontWeight: 600,
+                letterSpacing: "-0.015em",
               }}
             >
               Dashboard
@@ -152,49 +147,24 @@ export function MuiHeader({
             gap: 1,
           }}
         >
-          <Button
-            variant="outlined"
-            startIcon={
-              <CalendarDays
-                size={17}
-                aria-hidden="true"
-              />
-            }
-            sx={{
-              whiteSpace: "nowrap",
-              color: "text.primary",
-              borderColor: "divider",
-
-              "&:hover": {
-                borderColor: "divider",
-                backgroundColor: "action.hover",
-              },
-            }}
-          >
-            Last 30 Days
-          </Button>
-
           <IconButton
             onClick={onToggleTheme}
             aria-label={
-              isDark
-                ? "Switch to light theme"
-                : "Switch to dark theme"
+              isDark ? "Switch to light theme" : "Switch to dark theme"
             }
-            title={
-              isDark
-                ? "Switch to light theme"
-                : "Switch to dark theme"
-            }
+            title={isDark ? "Switch to light theme" : "Switch to dark theme"}
             sx={{
               width: 40,
               height: 40,
               flexShrink: 0,
+
               border: 1,
               borderColor: "divider",
+
               color: "text.primary",
 
               "&:hover": {
+                borderColor: "primary.main",
                 backgroundColor: "action.hover",
               },
             }}
@@ -210,16 +180,23 @@ export function MuiHeader({
             component={Link}
             to="/tailwind"
             variant="contained"
-            startIcon={
-              <ArrowRightLeft
-                size={17}
-                aria-hidden="true"
-              />
-            }
+            startIcon={<ArrowRightLeft size={17} aria-hidden="true" />}
             aria-label="View Tailwind CSS dashboard version"
-            sx={{
+            sx={(theme) => ({
               whiteSpace: "nowrap",
-            }}
+
+              boxShadow: `0 4px 12px ${alpha(
+                theme.palette.primary.main,
+                0.16,
+              )}`,
+
+              "&:hover": {
+                boxShadow: `0 5px 16px ${alpha(
+                  theme.palette.primary.main,
+                  0.22,
+                )}`,
+              },
+            })}
           >
             View Tailwind Version
           </Button>

@@ -25,22 +25,41 @@ export function TailwindDepartmentBarChart({
   const textColor = isDark ? "#fafafa" : "#171717";
   const primaryColor = "#f97316";
 
+  const totalProjects = departmentProjectData.reduce(
+    (total, item) => total + item.count,
+    0,
+  );
+
   return (
     <section
       className={[
         "rounded-xl border border-border-light",
-        "bg-surface-light p-5",
+        "bg-surface-light p-5 shadow-sm",
         "dark:border-border-dark dark:bg-surface-dark",
       ].join(" ")}
     >
-      <div className="mb-6">
-        <h2 className="text-base font-semibold text-text-light dark:text-text-dark">
-          Projects by Department
-        </h2>
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-base font-semibold tracking-tight text-text-light dark:text-text-dark">
+            Projects by Department
+          </h2>
 
-        <p className="mt-1 text-sm text-muted-light dark:text-muted-dark">
-          Current project distribution across delivery teams
-        </p>
+          <p className="mt-1 text-sm text-muted-light dark:text-muted-dark">
+            Current project distribution across delivery teams
+          </p>
+        </div>
+
+        <span
+          className={[
+            "shrink-0 rounded-full border px-2.5 py-1",
+            "border-border-light bg-app-light",
+            "text-xs font-medium text-muted-light",
+            "dark:border-border-dark dark:bg-white/[0.04]",
+            "dark:text-muted-dark",
+          ].join(" ")}
+        >
+          {totalProjects} projects
+        </span>
       </div>
 
       <div
@@ -51,32 +70,35 @@ export function TailwindDepartmentBarChart({
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={departmentProjectData}
+            layout="vertical"
             margin={{
-              top: 8,
-              right: 8,
-              left: -20,
+              top: 4,
+              right: 16,
+              left: 12,
               bottom: 0,
             }}
           >
             <CartesianGrid
               stroke={gridColor}
               strokeDasharray="4 4"
-              vertical={false}
+              horizontal={false}
             />
 
             <XAxis
-              dataKey="department"
+              type="number"
+              allowDecimals={false}
               axisLine={false}
               tickLine={false}
               tick={{
                 fill: mutedColor,
                 fontSize: 12,
               }}
-              tickMargin={12}
             />
 
             <YAxis
-              allowDecimals={false}
+              type="category"
+              dataKey="department"
+              width={88}
               axisLine={false}
               tickLine={false}
               tick={{
@@ -87,17 +109,20 @@ export function TailwindDepartmentBarChart({
 
             <Tooltip
               cursor={{
-                fill: isDark ? "#262626" : "#fafafa",
+                fill: isDark ? "rgba(255,255,255,0.035)" : "rgba(0,0,0,0.025)",
               }}
               contentStyle={{
                 backgroundColor: surfaceColor,
                 border: `1px solid ${gridColor}`,
-                borderRadius: 8,
+                borderRadius: 10,
                 color: textColor,
+                fontSize: 12,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.16)",
               }}
               labelStyle={{
                 color: textColor,
                 fontWeight: 600,
+                marginBottom: 4,
               }}
             />
 
@@ -105,8 +130,8 @@ export function TailwindDepartmentBarChart({
               dataKey="count"
               name="Projects"
               fill={primaryColor}
-              radius={[6, 6, 0, 0]}
-              maxBarSize={56}
+              radius={[0, 6, 6, 0]}
+              maxBarSize={28}
             />
           </BarChart>
         </ResponsiveContainer>

@@ -261,19 +261,19 @@ export const completionTrendData: ChartDataPoint[] = [
   },
   {
     month: "June",
-    completed: 1,
-  },
-  {
-    month: "July",
     completed: 2,
   },
   {
+    month: "July",
+    completed: 1,
+  },
+  {
     month: "August",
-    completed: 3,
+    completed: 2,
   },
   {
     month: "September",
-    completed: 4,
+    completed: 5,
   },
 ];
 

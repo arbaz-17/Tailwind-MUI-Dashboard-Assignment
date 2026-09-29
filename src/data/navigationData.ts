@@ -26,8 +26,8 @@ export const mainNavigation: NavigationItem[] = [
 
 export const secondaryNavigation: NavigationItem[] = [
   {
-    id: "settings",
-    label: "Settings",
+    id: "profile",
+    label: "Profile",
     icon: "settings",
   },
 ];

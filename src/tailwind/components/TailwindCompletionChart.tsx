@@ -29,18 +29,32 @@ export function TailwindCompletionChart({
     <section
       className={[
         "h-full rounded-xl border border-border-light",
-        "bg-surface-light p-5",
+        "bg-surface-light p-5 shadow-sm",
         "dark:border-border-dark dark:bg-surface-dark",
       ].join(" ")}
     >
-      <div className="mb-6">
-        <h2 className="text-base font-semibold text-text-light dark:text-text-dark">
-          Project Completion Trend
-        </h2>
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-base font-semibold tracking-tight text-text-light dark:text-text-dark">
+            Project Completion Trend
+          </h2>
 
-        <p className="mt-1 text-sm text-muted-light dark:text-muted-dark">
-          Cumulative project deliveries over the last five months
-        </p>
+          <p className="mt-1 text-sm text-muted-light dark:text-muted-dark">
+            Cumulative project deliveries over the last five months
+          </p>
+        </div>
+
+        <span
+          className={[
+            "shrink-0 rounded-full border px-2.5 py-1",
+            "border-border-light bg-app-light",
+            "text-xs font-medium text-muted-light",
+            "dark:border-border-dark dark:bg-white/[0.04]",
+            "dark:text-muted-dark",
+          ].join(" ")}
+        >
+          5 months
+        </span>
       </div>
 
       <div
@@ -66,13 +80,11 @@ export function TailwindCompletionChart({
                 x2="0"
                 y2="1"
               >
-                <stop offset="0%" stopColor={primaryColor} stopOpacity={0.35} />
+                <stop offset="0%" stopColor={primaryColor} stopOpacity={0.32} />
 
-                <stop
-                  offset="100%"
-                  stopColor={primaryColor}
-                  stopOpacity={0.02}
-                />
+                <stop offset="55%" stopColor={primaryColor} stopOpacity={0.1} />
+
+                <stop offset="100%" stopColor={primaryColor} stopOpacity={0} />
               </linearGradient>
             </defs>
 
@@ -106,17 +118,20 @@ export function TailwindCompletionChart({
             <Tooltip
               cursor={{
                 stroke: primaryColor,
-                strokeOpacity: 0.3,
+                strokeOpacity: 0.25,
               }}
               contentStyle={{
                 backgroundColor: surfaceColor,
                 border: `1px solid ${gridColor}`,
-                borderRadius: 8,
+                borderRadius: 10,
                 color: textColor,
+                fontSize: 12,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.16)",
               }}
               labelStyle={{
                 color: textColor,
                 fontWeight: 600,
+                marginBottom: 4,
               }}
             />
 
@@ -125,17 +140,19 @@ export function TailwindCompletionChart({
               dataKey="completed"
               name="Completed Projects"
               stroke={primaryColor}
-              strokeWidth={3}
+              strokeWidth={2.5}
               fill="url(#tailwindCompletionGradient)"
               dot={{
-                r: 4,
+                r: 3.5,
                 fill: primaryColor,
                 stroke: surfaceColor,
                 strokeWidth: 2,
               }}
               activeDot={{
-                r: 6,
+                r: 5.5,
                 fill: primaryColor,
+                stroke: surfaceColor,
+                strokeWidth: 2,
               }}
             />
           </AreaChart>

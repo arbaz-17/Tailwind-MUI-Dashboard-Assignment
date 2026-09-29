@@ -12,16 +12,22 @@ import { MuiKpiCard } from "./components/MuiKpiCard";
 import { MuiPriorityPieChart } from "./components/MuiPriorityPieChart";
 import { MuiProjectsTable } from "./components/MuiProjectsTable";
 
-import { DRAWER_WIDTH, MuiSidebar } from "./components/MuiSidebar";
+import {
+  COLLAPSED_DRAWER_WIDTH,
+  DRAWER_WIDTH,
+  MuiSidebar,
+} from "./components/MuiSidebar";
 
 import { MuiStatusSummary } from "./components/MuiStatusSummary";
 
 import { createMuiDashboardTheme, type MuiThemeMode } from "./theme/muiTheme";
 
 export function MuiDashboard() {
-  const [themeMode, setThemeMode] = useState<MuiThemeMode>("light");
+  const [themeMode, setThemeMode] = useState<MuiThemeMode>("dark");
 
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
+
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const theme = useMemo(() => createMuiDashboardTheme(themeMode), [themeMode]);
 
@@ -29,29 +35,44 @@ export function MuiDashboard() {
     setThemeMode((currentMode) => (currentMode === "light" ? "dark" : "light"));
   }
 
+  function toggleSidebar() {
+    setSidebarCollapsed((currentValue) => !currentValue);
+  }
+
+  const desktopSidebarWidth = sidebarCollapsed
+    ? COLLAPSED_DRAWER_WIDTH
+    : DRAWER_WIDTH;
+
   return (
     <ThemeProvider theme={theme}>
       <Box
         sx={{
           minHeight: "100vh",
+          overflowX: "hidden",
           backgroundColor: "background.default",
           color: "text.primary",
         }}
       >
         <MuiSidebar
           mobileOpen={mobileNavigationOpen}
+          collapsed={sidebarCollapsed}
           onClose={() => setMobileNavigationOpen(false)}
+          onToggleCollapse={toggleSidebar}
         />
 
         <Box
-          sx={{
+          sx={(theme) => ({
             minHeight: "100vh",
 
             ml: {
               xs: 0,
-              lg: `${DRAWER_WIDTH}px`,
+              lg: `${desktopSidebarWidth}px`,
             },
-          }}
+
+            transition: theme.transitions.create("margin-left", {
+              duration: theme.transitions.duration.shorter,
+            }),
+          })}
         >
           <MuiHeader
             themeMode={themeMode}
