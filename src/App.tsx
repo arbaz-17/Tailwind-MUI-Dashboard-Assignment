@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 
+import { MuiDashboard } from "./mui/MuiDashboard";
 import { ComparisonLandingPage } from "./pages/ComparisonLandingPage";
 import { TailwindDashboard } from "./tailwind/TailwindDashboard";
 
@@ -8,15 +9,9 @@ function App() {
     <Routes>
       <Route path="/" element={<ComparisonLandingPage />} />
 
-      <Route
-        path="/tailwind"
-        element={<TailwindDashboard />}
-      />
+      <Route path="/tailwind" element={<TailwindDashboard />} />
 
-      <Route
-        path="/mui"
-        element={<h1>Material UI Dashboard</h1>}
-      />
+      <Route path="/mui" element={<MuiDashboard />} />
     </Routes>
   );
 }
