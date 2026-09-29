@@ -1,75 +1,58 @@
-# React + TypeScript + Vite
+# Tailwind vs MUI Dashboard Assignment - Week 10
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This Week 10 assignment compares **Tailwind CSS** and **Material UI** by building the same responsive project dashboard with both approaches. The goal is to understand the differences in styling workflow, customization, consistency, maintainability, and responsive UI development.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What Was Created
 
-## React Compiler
+The project contains a comparison landing page and two separate dashboard implementations:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Tailwind CSS Dashboard** — built with Tailwind utility classes and scoped Tailwind styling.
+- **Material UI Dashboard** — built with MUI components, `sx` styling, and a custom theme.
+- **Comparison Landing Page** — provides access to both implementations and space for assignment information.
 
-## Expanding the ESLint configuration
+Both dashboards use the same shared mock project data and overall dashboard structure while keeping their framework-specific UI implementation separate.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Key Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Responsive dashboard layout for mobile, tablet, and desktop.
+- Collapsible desktop sidebar and mobile navigation drawer.
+- Light and dark theme support.
+- Shared KPI metrics, project status data, and recent projects.
+- Project completion area chart in both implementations.
+- Tailwind bar chart and MUI pie chart.
+- Recent projects table with status and progress indicators.
+- Direct switching between Tailwind and MUI dashboards.
+- Shared TypeScript data models and mock data.
+- Scoped Tailwind reset to avoid styling conflicts with Material UI.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Module Responsibility
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Module | Responsibility |
+| --- | --- |
+| `src/pages/` | Contains the comparison landing page used to access both dashboard implementations. |
+| `src/tailwind/` | Contains the complete Tailwind CSS dashboard, its components, and Tailwind-specific styling. |
+| `src/mui/` | Contains the Material UI dashboard, reusable MUI components, and custom MUI theme. |
+| `src/data/` | Stores shared mock dashboard and navigation data used by both implementations. |
+| `src/types/` | Defines shared TypeScript types for projects, metrics, navigation, charts, and dashboard data. |
+| `src/styles/` | Contains global application styling and shared typography setup. |
+| `src/App.tsx` | Defines the application routes for the landing page, Tailwind dashboard, and MUI dashboard. |
+| `src/main.tsx` | Initializes the React application, router, and global styles. |
 
-```
+## Week 10 Concepts Used
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+- **Responsive CSS** — layouts adapt across mobile, tablet, and desktop breakpoints.
+- **Tailwind CSS Utilities** — utility classes handle layout, spacing, typography, colors, states, and responsiveness.
+- **Tailwind Theme Tokens** — custom colors, typography, and dark-mode styling are configured through Tailwind.
+- **Material UI Components** — MUI components are composed to create a consistent dashboard interface.
+- **MUI ThemeProvider** — a custom theme controls colors, typography, breakpoints, shape, and component defaults.
+- **MUI `sx` Prop** — component-level responsive and theme-aware styling is handled with `sx`.
+- **Theme Customization** — both dashboards support custom light and dark themes using the same visual direction.
+- **Responsive Breakpoints** — MUI breakpoints were aligned with Tailwind breakpoints for a fair comparison.
+- **CSS Isolation** — Tailwind normalization is scoped so it does not interfere with Material UI.
+- **Reusable UI Structure** — dashboard sections are separated into focused React components for maintainability.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Live Demo
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+[Live Demo]()

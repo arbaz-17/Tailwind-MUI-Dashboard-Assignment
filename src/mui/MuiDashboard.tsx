@@ -9,7 +9,7 @@ import { kpiMetrics } from "../data/dashboardData";
 import { MuiCompletionChart } from "./components/MuiCompletionChart";
 import { MuiHeader } from "./components/MuiHeader";
 import { MuiKpiCard } from "./components/MuiKpiCard";
-import { MuiPriorityPieChart } from "./components/MuiPriorityPieChart";
+import {MuiPieChart} from "./components/MuiPieChart";
 import { MuiProjectsTable } from "./components/MuiProjectsTable";
 
 import {
@@ -131,7 +131,7 @@ export function MuiDashboard() {
               <MuiStatusSummary />
             </Box>
 
-            <MuiPriorityPieChart />
+            <MuiPieChart />
 
             <MuiProjectsTable />
           </Box>

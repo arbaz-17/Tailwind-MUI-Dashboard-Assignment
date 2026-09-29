@@ -10,13 +10,13 @@ import {
 
 import { departmentProjectData } from "../../data/dashboardData";
 
-type TailwindDepartmentBarChartProps = {
+type TailwindBarChartProps = {
   theme: "light" | "dark";
 };
 
-export function TailwindDepartmentBarChart({
+export function TailwindBarChart({
   theme,
-}: TailwindDepartmentBarChartProps) {
+}: TailwindBarChartProps) {
   const isDark = theme === "dark";
 
   const gridColor = isDark ? "#2f2f2f" : "#e5e5e5";

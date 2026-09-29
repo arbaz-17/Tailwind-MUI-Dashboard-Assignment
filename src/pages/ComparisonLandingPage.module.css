@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  padding: 40px 24px 56px;
+  padding: 40px 24px 72px;
   background: #0a0a0a;
   color: #fafafa;
   font-family: var(--font-app);
@@ -16,6 +16,15 @@
   display: flex;
   flex-direction: column;
   padding-top: 24px;
+}
+
+.assignmentLabel {
+  margin: 0 0 10px;
+  text-align: center;
+  color: #f97316;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
 }
 
 .title {
@@ -108,35 +117,61 @@
   border-radius: 4px;
 }
 
-.assignmentSection {
-  padding-top: 32px;
+.comparisonSection {
+  padding-top: 64px;
 }
 
-.assignmentTitle {
-  margin: 0 0 24px;
-  font-size: 26px;
+.sectionHeading {
+  max-width: 680px;
+  margin-bottom: 28px;
+}
+
+.sectionLabel {
+  margin: 0 0 8px;
+  color: #f97316;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.comparisonTitle {
+  margin: 0;
+  font-size: 28px;
   line-height: 1.3;
   font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
-.infoGrid {
+.comparisonIntro {
+  margin: 10px 0 0;
+  color: #a3a3a3;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.comparisonList {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
-.infoCard {
-  display: flex;
-  gap: 14px;
-  padding: 20px;
+.comparisonCard {
+  padding: 24px;
   border: 1px solid #2f2f2f;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #171717;
 }
 
-.infoIcon {
-  width: 36px;
-  height: 36px;
+.comparisonCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.comparisonIcon {
+  width: 38px;
+  height: 38px;
   display: grid;
   flex-shrink: 0;
   place-items: center;
@@ -145,27 +180,74 @@
   color: #f97316;
 }
 
-.infoTitle {
+.criteriaLabel {
+  margin: 0 0 2px;
+  color: #737373;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.criteriaTitle {
   margin: 0;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 1.4;
   font-weight: 500;
 }
 
-.infoDescription {
-  margin: 7px 0 0;
-  color: #a3a3a3;
-  font-size: 13px;
-  line-height: 1.65;
+.frameworkComparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.assignmentLabel {
-  margin: 0 0 10px;
-  text-align: center;
+.frameworkResult {
+  padding: 18px;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  background: #121212;
+}
+
+.resultHeading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
   color: #f97316;
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.04em;
+}
+
+.frameworkResult p {
+  margin: 0;
+  color: #a3a3a3;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.takeaway {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  background: rgb(249 115 22 / 0.07);
+}
+
+.takeaway span {
+  flex-shrink: 0;
+  color: #f97316;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.takeaway p {
+  margin: 0;
+  color: #d4d4d4;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 @media (max-width: 760px) {
@@ -177,13 +259,16 @@
     min-height: auto;
   }
 
+  .assignmentLabel,
   .title {
-    margin-bottom: 28px;
     text-align: left;
   }
 
-  .frameworkGrid,
-  .infoGrid {
+  .title {
+    margin-bottom: 28px;
+  }
+
+  .frameworkGrid {
     grid-template-columns: 1fr;
   }
 
@@ -192,8 +277,20 @@
     padding: 24px;
   }
 
-  .assignmentSection {
+  .comparisonSection {
     padding-top: 48px;
   }
-}
 
+  .frameworkComparison {
+    grid-template-columns: 1fr;
+  }
+
+  .comparisonCard {
+    padding: 20px;
+  }
+
+  .takeaway {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
