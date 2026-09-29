@@ -6,7 +6,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { priorityProjectData } from "../../data/dashboardData";
 
-export function MuiPriorityPieChart() {
+export function MuiPieChart() {
   const theme = useTheme();
 
   const totalProjects = priorityProjectData.reduce(

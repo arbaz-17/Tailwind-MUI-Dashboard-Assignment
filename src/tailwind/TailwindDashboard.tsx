@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { kpiMetrics } from "../data/dashboardData";
 
 import { TailwindCompletionChart } from "./components/TailwindCompletionChart";
-import { TailwindDepartmentBarChart } from "./components/TailwindDepartmentBarChart";
+import { TailwindBarChart } from "./components/TailwindBarChart";
 import { TailwindHeader } from "./components/TailwindHeader";
 import { TailwindKpiCard } from "./components/TailwindKpiCard";
 import { TailwindProjectsTable } from "./components/TailwindProjectsTable";
@@ -14,9 +14,7 @@ type ThemeMode = "light" | "dark";
 
 export function TailwindDashboard() {
   const [theme, setTheme] = useState<ThemeMode>("dark");
-
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
-
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   function toggleTheme() {
@@ -90,7 +88,7 @@ export function TailwindDashboard() {
               <TailwindStatusSummary />
             </div>
 
-            <TailwindDepartmentBarChart theme={theme} />
+            <TailwindBarChart theme={theme} />
 
             <TailwindProjectsTable />
           </main>
