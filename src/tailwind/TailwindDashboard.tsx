@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 
+import { kpiMetrics } from "../data/dashboardData";
+
+import { TailwindCompletionChart } from "./components/TailwindCompletionChart";
 import { TailwindHeader } from "./components/TailwindHeader";
+import { TailwindKpiCard } from "./components/TailwindKpiCard";
+import { TailwindProjectsTable } from "./components/TailwindProjectsTable";
 import { TailwindSidebar } from "./components/TailwindSidebar";
+import { TailwindStatusSummary } from "./components/TailwindStatusSummary";
 
 type ThemeMode = "light" | "dark";
 
@@ -51,26 +57,28 @@ export function TailwindDashboard() {
             }
           />
 
-          <main className="p-4 sm:p-6 lg:p-8">
-            <div
-              className={[
-                "grid min-h-96 place-items-center rounded-xl border",
-                "border-dashed border-border-light bg-surface-light",
-                "p-8 text-center",
-                "dark:border-border-dark dark:bg-surface-dark",
-              ].join(" ")}
+          <main className="space-y-6 p-4 sm:p-6 lg:p-8">
+            <section
+              aria-label="Project metrics"
+              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
             >
-              <div>
-                <p className="font-semibold text-text-light dark:text-text-dark">
-                  Dashboard content
-                </p>
+              {kpiMetrics.map((metric) => (
+                <TailwindKpiCard
+                  key={metric.id}
+                  metric={metric}
+                />
+              ))}
+            </section>
 
-                <p className="mt-2 text-sm text-muted-light dark:text-muted-dark">
-                  KPI cards, analytics, project status, and the
-                  projects table will be added in Phase 4.
-                </p>
+            <div className="grid gap-6 lg:grid-cols-3">
+              <div className="lg:col-span-2">
+                <TailwindCompletionChart theme={theme} />
               </div>
+
+              <TailwindStatusSummary />
             </div>
+
+            <TailwindProjectsTable />
           </main>
         </div>
       </div>
