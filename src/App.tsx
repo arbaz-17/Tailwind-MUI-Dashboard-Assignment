@@ -1,12 +1,27 @@
-import './App.css'
+import { Route, Routes } from "react-router";
+
+import { ComparisonLandingPage } from "./pages/ComparisonLandingPage";
 
 function App() {
   return (
-    <main>
-      <h1>Hello World</h1>
-      <p>Ready to build your new project!</p>
-    </main>
-  )
+    <Routes>
+      <Route path="/" element={<ComparisonLandingPage />} />
+
+      <Route
+        path="/tailwind"
+        element={
+          <h1 className="p-6 text-2xl font-semibold text-brand">
+            Tailwind Dashboard
+          </h1>
+        }
+      />
+
+      <Route
+        path="/mui"
+        element={<h1>Material UI Dashboard</h1>}
+      />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
