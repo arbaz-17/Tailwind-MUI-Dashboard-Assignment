@@ -83,14 +83,14 @@ export function MuiKpiCard({ metric }: MuiKpiCardProps) {
       </Stack>
 
       <Typography
-        color="success.main"
+        color="text.secondary"
         sx={{
           mt: 2,
           fontSize: 14,
           fontWeight: 500,
         }}
       >
-        {metric.change}
+        {metric.supportingText}
       </Typography>
     </Card>
   );

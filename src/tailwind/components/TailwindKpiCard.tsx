@@ -1,7 +1,7 @@
 import {
+  Activity,
   CircleCheckBig,
   FolderKanban,
-  Activity,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -19,9 +19,7 @@ const iconMap: Record<KpiMetric["icon"], LucideIcon> = {
   team: Users,
 };
 
-export function TailwindKpiCard({
-  metric,
-}: TailwindKpiCardProps) {
+export function TailwindKpiCard({ metric }: TailwindKpiCardProps) {
   const Icon = iconMap[metric.icon];
 
   return (
@@ -48,8 +46,8 @@ export function TailwindKpiCard({
         </div>
       </div>
 
-      <p className="mt-4 text-sm font-medium text-success">
-        {metric.change}
+      <p className="mt-4 text-sm font-medium text-muted-light dark:text-muted-dark">
+        {metric.supportingText}
       </p>
     </article>
   );

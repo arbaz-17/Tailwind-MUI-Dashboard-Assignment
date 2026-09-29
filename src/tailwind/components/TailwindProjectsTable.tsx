@@ -3,8 +3,7 @@ import { recentProjects } from "../../data/dashboardData";
 import type { ProjectStatus } from "../../types/dashboard";
 
 const statusStyles: Record<ProjectStatus, string> = {
-  Active:
-    "bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
+  Active: "bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
 
   Completed:
     "bg-green-50 text-green-700 dark:bg-green-950/50 dark:text-green-300",
@@ -22,6 +21,16 @@ const progressStyles: Record<ProjectStatus, string> = {
   "On Hold": "bg-hold",
   Planned: "bg-warning",
 };
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+
+function formatDueDate(date: string) {
+  return dateFormatter.format(new Date(`${date}T00:00:00`));
+}
 
 export function TailwindProjectsTable() {
   return (
@@ -45,8 +54,7 @@ export function TailwindProjectsTable() {
       <div className="overflow-x-auto">
         <table className="min-w-[720px] w-full border-collapse">
           <caption className="sr-only">
-            Recent projects with owners, statuses, progress, and due
-            dates
+            Recent projects with owners, statuses, progress, and due dates
           </caption>
 
           <thead>
@@ -150,7 +158,7 @@ export function TailwindProjectsTable() {
                 </td>
 
                 <td className="px-5 py-4 text-sm text-muted-light dark:text-muted-dark">
-                  {project.dueDate}
+                  {formatDueDate(project.dueDate)}
                 </td>
               </tr>
             ))}
