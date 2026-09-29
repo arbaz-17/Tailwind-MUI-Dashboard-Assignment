@@ -1,0 +1,118 @@
+import { useMemo, useState } from "react";
+
+import { Box } from "@mui/material";
+
+import { ThemeProvider } from "@mui/material/styles";
+
+import { kpiMetrics } from "../data/dashboardData";
+
+import { MuiCompletionChart } from "./components/MuiCompletionChart";
+import { MuiHeader } from "./components/MuiHeader";
+import { MuiKpiCard } from "./components/MuiKpiCard";
+import { MuiProjectsTable } from "./components/MuiProjectsTable";
+
+import { DRAWER_WIDTH, MuiSidebar } from "./components/MuiSidebar";
+
+import { MuiStatusSummary } from "./components/MuiStatusSummary";
+
+import { createMuiDashboardTheme, type MuiThemeMode } from "./theme/muiTheme";
+
+export function MuiDashboard() {
+  const [themeMode, setThemeMode] = useState<MuiThemeMode>("light");
+
+  const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
+
+  const theme = useMemo(() => createMuiDashboardTheme(themeMode), [themeMode]);
+
+  function toggleTheme() {
+    setThemeMode((currentMode) => (currentMode === "light" ? "dark" : "light"));
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: "background.default",
+          color: "text.primary",
+        }}
+      >
+        <MuiSidebar
+          mobileOpen={mobileNavigationOpen}
+          onClose={() => setMobileNavigationOpen(false)}
+        />
+
+        <Box
+          sx={{
+            minHeight: "100vh",
+
+            ml: {
+              xs: 0,
+              lg: `${DRAWER_WIDTH}px`,
+            },
+          }}
+        >
+          <MuiHeader
+            themeMode={themeMode}
+            onToggleTheme={toggleTheme}
+            onOpenNavigation={() => setMobileNavigationOpen(true)}
+          />
+
+          <Box
+            component="main"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+
+              p: {
+                xs: 2,
+                sm: 3,
+                lg: 4,
+              },
+            }}
+          >
+            <Box
+              component="section"
+              aria-label="Project metrics"
+              sx={{
+                display: "grid",
+
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm: "repeat(2, minmax(0, 1fr))",
+                  lg: "repeat(4, minmax(0, 1fr))",
+                },
+
+                gap: 2,
+              }}
+            >
+              {kpiMetrics.map((metric) => (
+                <MuiKpiCard key={metric.id} metric={metric} />
+              ))}
+            </Box>
+
+            <Box
+              sx={{
+                display: "grid",
+
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  lg: "minmax(0, 2fr) minmax(0, 1fr)",
+                },
+
+                gap: 3,
+              }}
+            >
+              <MuiCompletionChart />
+
+              <MuiStatusSummary />
+            </Box>
+
+            <MuiProjectsTable />
+          </Box>
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
+}
