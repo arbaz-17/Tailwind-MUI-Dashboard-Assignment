@@ -1,9 +1,11 @@
 import { Route, Routes } from "react-router";
 
+import { ComparisonLandingPage } from "./pages/ComparisonLandingPage";
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<h1>Dashboard Comparison</h1>} />
+      <Route path="/" element={<ComparisonLandingPage />} />
 
       <Route
         path="/tailwind"
@@ -14,7 +16,10 @@ function App() {
         }
       />
 
-      <Route path="/mui" element={<h1>Material UI Dashboard</h1>} />
+      <Route
+        path="/mui"
+        element={<h1>Material UI Dashboard</h1>}
+      />
     </Routes>
   );
 }
