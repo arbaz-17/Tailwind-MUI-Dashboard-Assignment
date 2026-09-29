@@ -1,8 +1,20 @@
 import { useMemo, useState } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+
+import { Box } from "@mui/material";
+
 import { ThemeProvider } from "@mui/material/styles";
+
+import { kpiMetrics } from "../data/dashboardData";
+
+import { MuiCompletionChart } from "./components/MuiCompletionChart";
 import { MuiHeader } from "./components/MuiHeader";
+import { MuiKpiCard } from "./components/MuiKpiCard";
+import { MuiProjectsTable } from "./components/MuiProjectsTable";
+
 import { DRAWER_WIDTH, MuiSidebar } from "./components/MuiSidebar";
+
+import { MuiStatusSummary } from "./components/MuiStatusSummary";
+
 import { createMuiDashboardTheme, type MuiThemeMode } from "./theme/muiTheme";
 
 export function MuiDashboard() {
@@ -49,6 +61,10 @@ export function MuiDashboard() {
           <Box
             component="main"
             sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+
               p: {
                 xs: 2,
                 sm: 3,
@@ -57,39 +73,43 @@ export function MuiDashboard() {
             }}
           >
             <Box
+              component="section"
+              aria-label="Project metrics"
               sx={{
                 display: "grid",
-                placeItems: "center",
-                minHeight: 384,
-                p: 4,
-                border: 1,
-                borderStyle: "dashed",
-                borderColor: "divider",
-                borderRadius: 1.5,
-                backgroundColor: "background.paper",
-                textAlign: "center",
+
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  sm: "repeat(2, minmax(0, 1fr))",
+                  lg: "repeat(4, minmax(0, 1fr))",
+                },
+
+                gap: 2,
               }}
             >
-              <Stack spacing={1}>
-                <Typography
-                  sx={{
-                    fontWeight: 600,
-                  }}
-                >
-                  Dashboard content
-                </Typography>
-
-                <Typography
-                  color="text.secondary"
-                  sx={{
-                    fontSize: 14,
-                  }}
-                >
-                  KPI cards, analytics, project status, and the projects table
-                  will be added in Phase 6.
-                </Typography>
-              </Stack>
+              {kpiMetrics.map((metric) => (
+                <MuiKpiCard key={metric.id} metric={metric} />
+              ))}
             </Box>
+
+            <Box
+              sx={{
+                display: "grid",
+
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  lg: "minmax(0, 2fr) minmax(0, 1fr)",
+                },
+
+                gap: 3,
+              }}
+            >
+              <MuiCompletionChart />
+
+              <MuiStatusSummary />
+            </Box>
+
+            <MuiProjectsTable />
           </Box>
         </Box>
       </Box>

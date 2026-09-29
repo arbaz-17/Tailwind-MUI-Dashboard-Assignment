@@ -99,6 +99,20 @@ export function createMuiDashboardTheme(mode: MuiThemeMode) {
           },
         },
       },
+
+      MuiCard: {
+        defaultProps: {
+          variant: "outlined",
+        },
+
+        styleOverrides: {
+          root: {
+            borderRadius: 12,
+            boxShadow: "none",
+            borderColor: isLight ? "#e2e8f0" : "#334155",
+          },
+        },
+      },
     },
   });
 }
