@@ -55,4 +55,4 @@ Both dashboards use the same shared mock project data and overall dashboard stru
 
 ## Live Demo
 
-[Live Demo]()
+[Live Demo](https://arbaz-17.github.io/Tailwind-MUI-Dashboard-Assignment/)
