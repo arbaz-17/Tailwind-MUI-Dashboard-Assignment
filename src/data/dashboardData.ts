@@ -2,6 +2,8 @@ import type {
   ChartDataPoint,
   KpiMetric,
   Project,
+  ProjectDepartment,
+  ProjectPriority,
   ProjectStatus,
   ProjectStatusSummary,
 } from "../types/dashboard";
@@ -13,6 +15,20 @@ const PROJECT_STATUS_ORDER: ProjectStatus[] = [
   "Completed",
   "On Hold",
   "Planned",
+];
+
+const PROJECT_DEPARTMENT_ORDER: ProjectDepartment[] = [
+  "Engineering",
+  "Design",
+  "Product",
+  "Marketing",
+  "Operations",
+];
+
+const PROJECT_PRIORITY_ORDER: ProjectPriority[] = [
+  "High",
+  "Medium",
+  "Low",
 ];
 
 export const projects: Project[] = [
@@ -173,6 +189,7 @@ function getProjectCountByStatus(
 }
 
 const activeProjects = getProjectCountByStatus("Active");
+
 const completedProjects =
   getProjectCountByStatus("Completed");
 
@@ -259,3 +276,19 @@ export const completionTrendData: ChartDataPoint[] = [
     completed: 4,
   },
 ];
+
+export const departmentProjectData =
+  PROJECT_DEPARTMENT_ORDER.map((department) => ({
+    department,
+    count: projects.filter(
+      (project) => project.department === department,
+    ).length,
+  }));
+
+export const priorityProjectData =
+  PROJECT_PRIORITY_ORDER.map((priority) => ({
+    priority,
+    count: projects.filter(
+      (project) => project.priority === priority,
+    ).length,
+  }));

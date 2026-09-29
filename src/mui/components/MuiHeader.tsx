@@ -1,6 +1,20 @@
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 
-import { CalendarDays, Menu, Moon, Plus, Sun } from "lucide-react";
+import {
+  ArrowRightLeft,
+  CalendarDays,
+  Menu,
+  Moon,
+  Sun,
+} from "lucide-react";
+
+import { Link } from "react-router";
 
 import type { MuiThemeMode } from "../theme/muiTheme";
 
@@ -35,13 +49,21 @@ export function MuiHeader({
           xs: "column",
           sm: "row",
         }}
-        spacing={2}
         sx={{
           minHeight: 80,
 
           alignItems: {
             xs: "stretch",
             sm: "center",
+          },
+
+          justifyContent: {
+            sm: "space-between",
+          },
+
+          gap: {
+            xs: 2,
+            sm: 3,
           },
 
           px: {
@@ -55,10 +77,11 @@ export function MuiHeader({
       >
         <Stack
           direction="row"
-          spacing={1.5}
           sx={{
             minWidth: 0,
+            flex: 1,
             alignItems: "center",
+            gap: 1.5,
           }}
         >
           <IconButton
@@ -117,19 +140,28 @@ export function MuiHeader({
         <Stack
           direction="row"
           sx={{
-            ml: {
-              sm: "auto",
+            flexShrink: 0,
+            flexWrap: "wrap",
+            alignItems: "center",
+
+            justifyContent: {
+              xs: "flex-start",
+              sm: "flex-end",
             },
 
             gap: 1,
-            flexWrap: "wrap",
-            alignItems: "center",
           }}
         >
           <Button
             variant="outlined"
-            startIcon={<CalendarDays size={17} aria-hidden="true" />}
+            startIcon={
+              <CalendarDays
+                size={17}
+                aria-hidden="true"
+              />
+            }
             sx={{
+              whiteSpace: "nowrap",
               color: "text.primary",
               borderColor: "divider",
 
@@ -145,15 +177,26 @@ export function MuiHeader({
           <IconButton
             onClick={onToggleTheme}
             aria-label={
-              isDark ? "Switch to light theme" : "Switch to dark theme"
+              isDark
+                ? "Switch to light theme"
+                : "Switch to dark theme"
             }
-            title={isDark ? "Switch to light theme" : "Switch to dark theme"}
+            title={
+              isDark
+                ? "Switch to light theme"
+                : "Switch to dark theme"
+            }
             sx={{
               width: 40,
               height: 40,
+              flexShrink: 0,
               border: 1,
               borderColor: "divider",
               color: "text.primary",
+
+              "&:hover": {
+                backgroundColor: "action.hover",
+              },
             }}
           >
             {isDark ? (
@@ -164,10 +207,21 @@ export function MuiHeader({
           </IconButton>
 
           <Button
+            component={Link}
+            to="/tailwind"
             variant="contained"
-            startIcon={<Plus size={17} aria-hidden="true" />}
+            startIcon={
+              <ArrowRightLeft
+                size={17}
+                aria-hidden="true"
+              />
+            }
+            aria-label="View Tailwind CSS dashboard version"
+            sx={{
+              whiteSpace: "nowrap",
+            }}
           >
-            New Project
+            View Tailwind Version
           </Button>
         </Stack>
       </Stack>

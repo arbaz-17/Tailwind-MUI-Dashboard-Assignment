@@ -1,10 +1,12 @@
 import {
+  ArrowRightLeft,
   CalendarDays,
   Menu,
   Moon,
-  Plus,
   Sun,
 } from "lucide-react";
+
+import { Link } from "react-router";
 
 type ThemeMode = "light" | "dark";
 
@@ -32,7 +34,7 @@ export function TailwindHeader({
       <div
         className={[
           "flex min-h-20 flex-col gap-4 px-4 py-4",
-          "sm:flex-row sm:items-center sm:px-6",
+          "sm:flex-row sm:items-center sm:justify-between sm:px-6",
           "lg:px-8",
         ].join(" ")}
       >
@@ -67,7 +69,7 @@ export function TailwindHeader({
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
           <button
             type="button"
             className={[
@@ -117,21 +119,23 @@ export function TailwindHeader({
             )}
           </button>
 
-          <button
-            type="button"
+          <Link
+            to="/mui"
+            aria-label="View Material UI dashboard version"
             className={[
               "inline-flex h-10 items-center gap-2 rounded-lg",
-              "bg-brand px-4 text-sm font-semibold text-white",
-              "transition-opacity hover:opacity-90",
+              "whitespace-nowrap bg-brand px-4",
+              "text-sm font-semibold text-white no-underline",
+              "transition-colors hover:bg-brand-strong",
               "focus-visible:outline-none focus-visible:ring-2",
               "focus-visible:ring-brand focus-visible:ring-offset-2",
               "dark:focus-visible:ring-offset-surface-dark",
             ].join(" ")}
           >
-            <Plus size={17} aria-hidden="true" />
+            <ArrowRightLeft size={17} aria-hidden="true" />
 
-            <span>New Project</span>
-          </button>
+            <span>View MUI Version</span>
+          </Link>
         </div>
       </div>
     </header>

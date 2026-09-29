@@ -1,91 +1,84 @@
 .page {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px;
-  background: var(--color-page-light);
-  color: var(--color-text-light);
+  padding: 40px 24px 56px;
+  background: #0a0a0a;
+  color: #fafafa;
   font-family: var(--font-app);
 }
 
 .container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
-.header {
-  max-width: 680px;
-  margin: 0 auto 40px;
-  text-align: center;
-}
-
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 12px;
-  color: var(--color-primary);
-  font-size: 14px;
-  font-weight: 600;
+.dashboardSection {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
 }
 
 .title {
-  margin: 0;
-  font-size: clamp(32px, 6vw, 48px);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  font-weight: 700;
+  margin: 0 0 32px;
+  text-align: center;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  font-weight: 500;
 }
 
-.description {
-  margin: 18px auto 0;
-  color: var(--color-muted-light);
-  font-size: 16px;
-  line-height: 1.7;
+.title span {
+  color: #f97316;
 }
 
-.grid {
+.frameworkGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
-.card {
+.frameworkCard {
   display: flex;
-  min-height: 250px;
+  min-height: 255px;
   flex-direction: column;
   padding: 28px;
-  border: 1px solid var(--color-border-light);
+  border: 1px solid #2f2f2f;
   border-radius: 16px;
-  background: var(--color-surface-light);
-  box-shadow: 0 8px 30px rgb(0 0 0 / 0.05);
+  background: #171717;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.frameworkCard:hover {
+  transform: translateY(-2px);
+  border-color: rgb(249 115 22 / 0.55);
 }
 
 .iconWrapper {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
-  margin-bottom: 28px;
-  border-radius: 12px;
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
-}
-
-.cardContent {
-  flex: 1;
+  margin-bottom: 24px;
+  border-radius: 10px;
+  background: rgb(249 115 22 / 0.12);
+  color: #f97316;
 }
 
 .cardTitle {
   margin: 0;
   font-size: 22px;
   line-height: 1.3;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .cardDescription {
+  max-width: 430px;
   margin: 10px 0 0;
-  color: var(--color-muted-light);
-  line-height: 1.6;
+  color: #a3a3a3;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .cardLink {
@@ -93,10 +86,11 @@
   align-items: center;
   align-self: flex-start;
   gap: 8px;
-  margin-top: 28px;
-  color: var(--color-primary);
+  margin-top: auto;
+  padding-top: 28px;
+  color: #f97316;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   transition:
     color 150ms ease,
@@ -104,32 +98,102 @@
 }
 
 .cardLink:hover {
-  color: var(--color-primary-strong);
   gap: 10px;
+  color: #fb923c;
 }
 
 .cardLink:focus-visible {
-  outline: 3px solid rgb(249 115 22 / 0.25);
-  outline-offset: 4px;
+  outline: 2px solid #f97316;
+  outline-offset: 5px;
   border-radius: 4px;
 }
 
-@media (max-width: 640px) {
+.assignmentSection {
+  padding-top: 32px;
+}
+
+.assignmentTitle {
+  margin: 0 0 24px;
+  font-size: 26px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.infoCard {
+  display: flex;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  background: #171717;
+}
+
+.infoIcon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 9px;
+  background: rgb(249 115 22 / 0.1);
+  color: #f97316;
+}
+
+.infoTitle {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.infoDescription {
+  margin: 7px 0 0;
+  color: #a3a3a3;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.assignmentLabel {
+  margin: 0 0 10px;
+  text-align: center;
+  color: #f97316;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 760px) {
   .page {
-    align-items: flex-start;
-    padding: 40px 16px;
+    padding: 32px 16px 48px;
   }
 
-  .header {
-    margin-bottom: 32px;
+  .dashboardSection {
+    min-height: auto;
   }
 
-  .grid {
+  .title {
+    margin-bottom: 28px;
+    text-align: left;
+  }
+
+  .frameworkGrid,
+  .infoGrid {
     grid-template-columns: 1fr;
   }
 
-  .card {
-    min-height: 220px;
+  .frameworkCard {
+    min-height: 230px;
     padding: 24px;
   }
+
+  .assignmentSection {
+    padding-top: 48px;
+  }
 }
+

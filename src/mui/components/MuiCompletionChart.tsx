@@ -3,9 +3,9 @@ import { Box, Card, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -50,18 +50,20 @@ export function MuiCompletionChart() {
             fontSize: 14,
           }}
         >
-          Completed projects over the last five months
+          Cumulative project deliveries over the last five months
         </Typography>
       </Box>
 
       <Box
+        role="img"
+        aria-label="Area chart showing cumulative project completions from May to September"
         sx={{
           width: "100%",
           height: 288,
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart
+          <AreaChart
             data={completionTrendData}
             margin={{
               top: 8,
@@ -70,6 +72,24 @@ export function MuiCompletionChart() {
               bottom: 0,
             }}
           >
+            <defs>
+              <linearGradient
+                id="muiCompletionGradient"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+                <stop offset="0%" stopColor={primaryColor} stopOpacity={0.35} />
+
+                <stop
+                  offset="100%"
+                  stopColor={primaryColor}
+                  stopOpacity={0.02}
+                />
+              </linearGradient>
+            </defs>
+
             <CartesianGrid
               stroke={gridColor}
               strokeDasharray="4 4"
@@ -99,7 +119,8 @@ export function MuiCompletionChart() {
 
             <Tooltip
               cursor={{
-                stroke: gridColor,
+                stroke: primaryColor,
+                strokeOpacity: 0.3,
               }}
               contentStyle={{
                 backgroundColor: surfaceColor,
@@ -113,21 +134,25 @@ export function MuiCompletionChart() {
               }}
             />
 
-            <Line
+            <Area
               type="monotone"
               dataKey="completed"
               name="Completed Projects"
               stroke={primaryColor}
               strokeWidth={3}
+              fill="url(#muiCompletionGradient)"
               dot={{
                 r: 4,
                 fill: primaryColor,
+                stroke: surfaceColor,
+                strokeWidth: 2,
               }}
               activeDot={{
                 r: 6,
+                fill: primaryColor,
               }}
             />
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       </Box>
     </Card>

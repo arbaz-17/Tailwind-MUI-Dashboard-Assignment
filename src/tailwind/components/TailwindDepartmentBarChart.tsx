@@ -1,6 +1,6 @@
 import {
-  Area,
-  AreaChart,
+  Bar,
+  BarChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
@@ -8,15 +8,15 @@ import {
   YAxis,
 } from "recharts";
 
-import { completionTrendData } from "../../data/dashboardData";
+import { departmentProjectData } from "../../data/dashboardData";
 
-type TailwindCompletionChartProps = {
+type TailwindDepartmentBarChartProps = {
   theme: "light" | "dark";
 };
 
-export function TailwindCompletionChart({
+export function TailwindDepartmentBarChart({
   theme,
-}: TailwindCompletionChartProps) {
+}: TailwindDepartmentBarChartProps) {
   const isDark = theme === "dark";
 
   const gridColor = isDark ? "#2f2f2f" : "#e5e5e5";
@@ -28,29 +28,29 @@ export function TailwindCompletionChart({
   return (
     <section
       className={[
-        "h-full rounded-xl border border-border-light",
+        "rounded-xl border border-border-light",
         "bg-surface-light p-5",
         "dark:border-border-dark dark:bg-surface-dark",
       ].join(" ")}
     >
       <div className="mb-6">
         <h2 className="text-base font-semibold text-text-light dark:text-text-dark">
-          Project Completion Trend
+          Projects by Department
         </h2>
 
         <p className="mt-1 text-sm text-muted-light dark:text-muted-dark">
-          Cumulative project deliveries over the last five months
+          Current project distribution across delivery teams
         </p>
       </div>
 
       <div
         className="h-72 w-full"
         role="img"
-        aria-label="Area chart showing cumulative project completions from May to September"
+        aria-label="Bar chart showing the number of projects by department"
       >
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={completionTrendData}
+          <BarChart
+            data={departmentProjectData}
             margin={{
               top: 8,
               right: 8,
@@ -58,24 +58,6 @@ export function TailwindCompletionChart({
               bottom: 0,
             }}
           >
-            <defs>
-              <linearGradient
-                id="tailwindCompletionGradient"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
-                <stop offset="0%" stopColor={primaryColor} stopOpacity={0.35} />
-
-                <stop
-                  offset="100%"
-                  stopColor={primaryColor}
-                  stopOpacity={0.02}
-                />
-              </linearGradient>
-            </defs>
-
             <CartesianGrid
               stroke={gridColor}
               strokeDasharray="4 4"
@@ -83,7 +65,7 @@ export function TailwindCompletionChart({
             />
 
             <XAxis
-              dataKey="month"
+              dataKey="department"
               axisLine={false}
               tickLine={false}
               tick={{
@@ -105,8 +87,7 @@ export function TailwindCompletionChart({
 
             <Tooltip
               cursor={{
-                stroke: primaryColor,
-                strokeOpacity: 0.3,
+                fill: isDark ? "#262626" : "#fafafa",
               }}
               contentStyle={{
                 backgroundColor: surfaceColor,
@@ -120,25 +101,14 @@ export function TailwindCompletionChart({
               }}
             />
 
-            <Area
-              type="monotone"
-              dataKey="completed"
-              name="Completed Projects"
-              stroke={primaryColor}
-              strokeWidth={3}
-              fill="url(#tailwindCompletionGradient)"
-              dot={{
-                r: 4,
-                fill: primaryColor,
-                stroke: surfaceColor,
-                strokeWidth: 2,
-              }}
-              activeDot={{
-                r: 6,
-                fill: primaryColor,
-              }}
+            <Bar
+              dataKey="count"
+              name="Projects"
+              fill={primaryColor}
+              radius={[6, 6, 0, 0]}
+              maxBarSize={56}
             />
-          </AreaChart>
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </section>

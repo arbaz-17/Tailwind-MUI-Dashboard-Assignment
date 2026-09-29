@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { kpiMetrics } from "../data/dashboardData";
 
 import { TailwindCompletionChart } from "./components/TailwindCompletionChart";
+import { TailwindDepartmentBarChart } from "./components/TailwindDepartmentBarChart";
 import { TailwindHeader } from "./components/TailwindHeader";
 import { TailwindKpiCard } from "./components/TailwindKpiCard";
 import { TailwindProjectsTable } from "./components/TailwindProjectsTable";
@@ -13,13 +14,11 @@ type ThemeMode = "light" | "dark";
 
 export function TailwindDashboard() {
   const [theme, setTheme] = useState<ThemeMode>("light");
-  const [mobileNavigationOpen, setMobileNavigationOpen] =
-    useState(false);
+
+  const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
 
   function toggleTheme() {
-    setTheme((currentTheme) =>
-      currentTheme === "light" ? "dark" : "light",
-    );
+    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
   }
 
   useEffect(() => {
@@ -52,9 +51,7 @@ export function TailwindDashboard() {
           <TailwindHeader
             theme={theme}
             onToggleTheme={toggleTheme}
-            onOpenNavigation={() =>
-              setMobileNavigationOpen(true)
-            }
+            onOpenNavigation={() => setMobileNavigationOpen(true)}
           />
 
           <main className="space-y-6 p-4 sm:p-6 lg:p-8">
@@ -63,10 +60,7 @@ export function TailwindDashboard() {
               className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
             >
               {kpiMetrics.map((metric) => (
-                <TailwindKpiCard
-                  key={metric.id}
-                  metric={metric}
-                />
+                <TailwindKpiCard key={metric.id} metric={metric} />
               ))}
             </section>
 
@@ -77,6 +71,8 @@ export function TailwindDashboard() {
 
               <TailwindStatusSummary />
             </div>
+
+            <TailwindDepartmentBarChart theme={theme} />
 
             <TailwindProjectsTable />
           </main>
